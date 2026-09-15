@@ -1,0 +1,16 @@
+{
+  "name": "aarohan",
+  "version": "1.0.0",
+  "description": "AAROHAN - AI-Powered Voice Assistant for Livelihood Mapping & NSQF-Aligned Skilling | SIH 2026",
+  "private": true,
+  "scripts": {
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:ai": "cd ai-service && python main.py",
+    "install:all": "cd frontend && npm install && cd ../backend && npm install",
+    "seed": "cd backend && node src/seed/seed.js",
+    "start": "echo Please run each service individually — see README.md"
+  },
+  "keywords": ["sih", "aarohan", "skill-mapping", "livelihood", "nsqf", "voice-assistant"],
+  "license": "MIT"
+}
