@@ -122,3 +122,4 @@ def extract_profile(text: str, language: str = "hi") -> Dict[str, Any]:
         "assistantReply": reply,
         "confidence": 0.95
     }
+

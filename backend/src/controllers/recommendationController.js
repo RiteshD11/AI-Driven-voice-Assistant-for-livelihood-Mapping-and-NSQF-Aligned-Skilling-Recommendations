@@ -210,3 +210,4 @@ exports.getTrainingPrograms = async (req, res) => {
     programs: DEMO_TRAINING_CATALOG
   });
 };
+

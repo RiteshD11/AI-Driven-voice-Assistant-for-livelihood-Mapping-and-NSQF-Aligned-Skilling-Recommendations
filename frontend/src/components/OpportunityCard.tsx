@@ -86,3 +86,4 @@ export const OpportunityCard: React.FC<OpportunityCardProps> = ({ opp }) => {
     </div>
   );
 };
+

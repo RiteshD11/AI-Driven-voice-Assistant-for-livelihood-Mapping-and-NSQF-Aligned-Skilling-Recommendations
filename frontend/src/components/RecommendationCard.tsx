@@ -174,3 +174,4 @@ export const RecommendationCard: React.FC<RecommendationCardProps> = ({ item, on
     </div>
   );
 };
+

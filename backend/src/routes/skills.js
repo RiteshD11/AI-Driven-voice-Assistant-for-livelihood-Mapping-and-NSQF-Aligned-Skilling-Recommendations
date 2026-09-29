@@ -6,3 +6,4 @@ router.post('/gap', skillsController.analyzeSkillGap);
 router.get('/roles', skillsController.getAvailableRoles);
 
 module.exports = router;
+

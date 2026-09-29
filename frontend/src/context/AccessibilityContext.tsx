@@ -62,3 +62,4 @@ export const useAccessibility = () => {
   if (!context) throw new Error('useAccessibility must be used within AccessibilityProvider');
   return context;
 };
+

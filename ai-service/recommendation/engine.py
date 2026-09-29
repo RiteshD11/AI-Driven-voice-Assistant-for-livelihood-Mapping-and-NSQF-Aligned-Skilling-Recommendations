@@ -96,3 +96,4 @@ def recommend_training(profile: Dict[str, Any]) -> List[Dict[str, Any]]:
 
     recommendations.sort(key=lambda x: x["matchScore"], reverse=True)
     return recommendations
+

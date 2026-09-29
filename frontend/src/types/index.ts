@@ -126,3 +126,4 @@ export interface ExtractedAIProfile {
   mobilityPreference: 'local' | 'district' | 'state' | null;
   location: { district: string; state: string; pincode?: string } | null;
 }
+

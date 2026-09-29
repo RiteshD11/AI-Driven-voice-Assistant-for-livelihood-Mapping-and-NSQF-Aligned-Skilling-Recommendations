@@ -155,3 +155,4 @@ export const VoiceButton: React.FC<VoiceButtonProps> = ({ onTranscript, isProces
     </div>
   );
 };
+

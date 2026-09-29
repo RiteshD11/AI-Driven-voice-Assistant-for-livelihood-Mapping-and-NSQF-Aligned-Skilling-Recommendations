@@ -44,3 +44,4 @@ def map_livelihood(skills: list, target_interest: str = "it") -> Dict[str, Any]:
                 "schemeSupport": "PM-AJAY Grants & Stand-Up India Assistance"
             }
         }
+

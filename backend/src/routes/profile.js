@@ -8,3 +8,4 @@ router.put('/:userId?', protect, profileController.updateProfile);
 router.post('/confirm-ai', protect, profileController.confirmAiExtraction);
 
 module.exports = router;
+

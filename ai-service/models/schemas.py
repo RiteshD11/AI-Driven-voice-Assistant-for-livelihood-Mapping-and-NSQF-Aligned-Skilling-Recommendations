@@ -54,3 +54,4 @@ class RecommendationRequest(BaseModel):
     interests: List[str] = []
     location: Optional[str] = "Varanasi"
     job_preference: Optional[str] = "both"
+

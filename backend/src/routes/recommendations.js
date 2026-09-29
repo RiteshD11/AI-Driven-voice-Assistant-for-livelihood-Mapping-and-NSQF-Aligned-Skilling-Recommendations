@@ -7,3 +7,4 @@ router.get('/list', recommendationController.getTrainingPrograms);
 router.get('/:userId?', protect, recommendationController.getRecommendations);
 
 module.exports = router;
+

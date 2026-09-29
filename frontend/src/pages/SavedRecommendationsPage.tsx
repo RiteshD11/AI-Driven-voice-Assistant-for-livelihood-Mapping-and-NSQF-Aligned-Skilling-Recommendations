@@ -58,3 +58,4 @@ export const SavedRecommendationsPage: React.FC = () => {
     </div>
   );
 };
+

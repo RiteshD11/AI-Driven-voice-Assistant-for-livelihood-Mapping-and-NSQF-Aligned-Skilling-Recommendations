@@ -6,3 +6,4 @@ router.get('/', jobsController.getOpportunities);
 router.get('/pathway', jobsController.getLivelihoodPathway);
 
 module.exports = router;
+

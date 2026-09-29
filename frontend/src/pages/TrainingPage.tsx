@@ -121,3 +121,4 @@ export const TrainingPage: React.FC = () => {
     </div>
   );
 };
+

@@ -66,3 +66,4 @@ export const ConsentModal: React.FC<ConsentModalProps> = ({ isOpen, onClose, onA
     </div>
   );
 };
+

@@ -84,3 +84,4 @@ export const useDemo = () => {
   if (!context) throw new Error('useDemo must be used within DemoProvider');
   return context;
 };
+

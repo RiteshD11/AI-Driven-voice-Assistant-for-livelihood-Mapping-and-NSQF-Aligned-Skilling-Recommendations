@@ -100,3 +100,4 @@ beneficiaryProfileSchema.pre('save', function(next) {
 });
 
 module.exports = mongoose.model('BeneficiaryProfile', beneficiaryProfileSchema);
+

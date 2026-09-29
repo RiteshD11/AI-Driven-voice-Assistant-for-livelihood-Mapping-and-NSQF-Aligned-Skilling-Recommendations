@@ -76,3 +76,4 @@ def identify_skill_gap(target_role: str, existing_skills: List[Any]) -> Dict[str
         "recommendedNextSkill": next_skill,
         "explanation": f"You have mastered {len(mastered)} of {len(role['requiredSkills'])} competencies for {role['title']}. We recommend focusing on '{next_skill}' next."
     }
+

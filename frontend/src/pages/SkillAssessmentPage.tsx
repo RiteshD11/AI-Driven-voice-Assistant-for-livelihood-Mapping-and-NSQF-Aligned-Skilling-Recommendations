@@ -121,3 +121,4 @@ export const SkillAssessmentPage: React.FC = () => {
     </div>
   );
 };
+

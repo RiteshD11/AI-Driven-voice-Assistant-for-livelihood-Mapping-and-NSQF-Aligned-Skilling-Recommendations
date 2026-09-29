@@ -181,3 +181,4 @@ export const LivelihoodMapPage: React.FC = () => {
     </div>
   );
 };
+

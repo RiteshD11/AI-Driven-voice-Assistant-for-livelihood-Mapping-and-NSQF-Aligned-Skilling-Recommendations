@@ -129,3 +129,4 @@ exports.getAvailableRoles = (req, res) => {
   }));
   res.json({ success: true, roles });
 };
+
