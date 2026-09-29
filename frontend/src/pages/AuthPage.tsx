@@ -36,8 +36,10 @@ export const AuthPage: React.FC = () => {
       email: identifier.includes('@') ? identifier : undefined,
       phone: !identifier.includes('@') ? identifier : phone || '9876543210',
       role: 'beneficiary',
-      preferredLanguage: language,
-      consentGiven: acceptedConsent
+      language: (language as any) || 'hi',
+      preferredLanguage: (language as any) || 'hi',
+      consentGiven: acceptedConsent,
+      createdAt: new Date().toISOString()
     });
 
     navigate('/assistant');

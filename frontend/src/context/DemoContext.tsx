@@ -61,7 +61,7 @@ export const DemoProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const updateProfile = (updates: Partial<BeneficiaryProfile>) => {
-    setCurrentProfile(prev => ({ ...prev, ...updates }));
+    setCurrentProfile((prev: BeneficiaryProfile) => ({ ...prev, ...updates }));
   };
 
   return (

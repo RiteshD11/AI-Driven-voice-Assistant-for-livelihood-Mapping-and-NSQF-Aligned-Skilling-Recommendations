@@ -1,74 +1,166 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { LanguageProvider } from './context/LanguageContext';
-import { DemoProvider } from './context/DemoContext';
-import { AuthProvider } from './context/AuthContext';
-import { AccessibilityProvider } from './context/AccessibilityContext';
-
-import { DemoBanner } from './components/DemoBanner';
+import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { useLanguageState } from './hooks/useLanguage';
+import { useDemoMode, DEMO_STEPS } from './hooks/useDemoMode';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
+import { DemoFloatingBar } from './components/DemoFloatingBar';
 
-// 14 Pages as required by specification
+// PS97 Dedicated Pages
 import { LandingPage } from './pages/LandingPage';
-import { AuthPage } from './pages/AuthPage';
-import { VoiceAssistantPage } from './pages/VoiceAssistantPage';
+import { VoiceJourneyPage } from './pages/VoiceJourneyPage';
 import { ProfilePage } from './pages/ProfilePage';
-import { SkillAssessmentPage } from './pages/SkillAssessmentPage';
 import { SkillGapPage } from './pages/SkillGapPage';
-import { TrainingPage } from './pages/TrainingPage';
-import { LivelihoodMapPage } from './pages/LivelihoodMapPage';
-import { JobsPage } from './pages/JobsPage';
-import { SavedRecommendationsPage } from './pages/SavedRecommendationsPage';
-import { ProgressDashboardPage } from './pages/ProgressDashboardPage';
+import { RecommendationsPage } from './pages/RecommendationsPage';
+import { PathwayPage } from './pages/PathwayPage';
+import { OpportunitiesPage } from './pages/OpportunitiesPage';
+import { FollowUpPage } from './pages/FollowUpPage';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
-import { AboutPage } from './pages/AboutPage';
-import { HelpPage } from './pages/HelpPage';
+import { Recommendation } from './types';
+
+const MainAppContent: React.FC = () => {
+  const { language, setLanguage } = useLanguageState();
+  const [activeView, setActiveView] = useState<string>('landing');
+  const [userRole, setUserRole] = useState<'beneficiary' | 'admin'>('beneficiary');
+
+  // Evaluator Demo Mode
+  const {
+    isDemoActive,
+    currentStepIndex,
+    totalSteps,
+    startDemo,
+    stopDemo,
+    nextStep,
+    prevStep,
+    goToStep,
+  } = useDemoMode((route: string) => {
+    setActiveView(route);
+  });
+
+  const handleStartDemo = () => {
+    setUserRole('beneficiary');
+    startDemo();
+  };
+
+  const handleToggleRole = (role: 'beneficiary' | 'admin') => {
+    setUserRole(role);
+    if (role === 'admin') {
+      setActiveView('admin');
+    } else {
+      setActiveView('landing');
+    }
+  };
+
+  const navigateTo = (view: string) => {
+    setActiveView(view);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col bg-[#0c121e] text-slate-100 selection:bg-amber-500/30 selection:text-amber-200">
+      {/* Floating Glassmorphism Pill Navbar */}
+      <Navbar
+        activeView={activeView}
+        onNavigate={navigateTo}
+        userRole={userRole}
+        onToggleRole={handleToggleRole}
+        currentLanguage={language}
+        onSelectLanguage={setLanguage}
+        onStartDemo={handleStartDemo}
+        isDemoActive={isDemoActive}
+      />
+
+      {/* Main Content Area */}
+      <main className="flex-1 w-full pt-4 pb-20">
+        {userRole === 'admin' ? (
+          <AdminDashboardPage />
+        ) : (
+          <>
+            {activeView === 'landing' && (
+              <LandingPage
+                currentLanguage={language}
+                onSelectLanguage={setLanguage}
+                onStartJourney={() => navigateTo('voice')}
+                onExploreHowItWorks={() => navigateTo('skill-gap')}
+                onStartDemo={handleStartDemo}
+              />
+            )}
+
+            {activeView === 'voice' && (
+              <VoiceJourneyPage
+                currentLanguage={language}
+                onCompleteSession={() => navigateTo('profile')}
+              />
+            )}
+
+            {activeView === 'profile' && (
+              <ProfilePage
+                onAnalyzeSkills={() => navigateTo('skill-gap')}
+              />
+            )}
+
+            {activeView === 'skill-gap' && (
+              <SkillGapPage
+                onExploreRecommendations={() => navigateTo('recommendations')}
+              />
+            )}
+
+            {activeView === 'recommendations' && (
+              <RecommendationsPage
+                onSelectPathway={(rec: Recommendation) => navigateTo('pathway')}
+              />
+            )}
+
+            {activeView === 'pathway' && (
+              <PathwayPage
+                onStartTraining={() => navigateTo('opportunities')}
+                onExploreOpportunities={() => navigateTo('opportunities')}
+              />
+            )}
+
+            {activeView === 'opportunities' && (
+              <OpportunitiesPage
+                onProceedToFollowUp={() => navigateTo('follow-up')}
+              />
+            )}
+
+            {activeView === 'follow-up' && (
+              <FollowUpPage
+                onCompleteJourney={() => navigateTo('landing')}
+              />
+            )}
+
+            {activeView === 'admin' && (
+              <AdminDashboardPage />
+            )}
+          </>
+        )}
+      </main>
+
+      {/* Floating Interactive Evaluator Demo Tour Controller */}
+      {isDemoActive && (
+        <DemoFloatingBar
+          currentStepIndex={currentStepIndex}
+          totalSteps={totalSteps}
+          onNext={nextStep}
+          onPrev={prevStep}
+          onGoToStep={goToStep}
+          onClose={stopDemo}
+        />
+      )}
+
+      {/* Comprehensive SIH PM-AJAY Footer */}
+      <Footer />
+    </div>
+  );
+};
 
 export const App: React.FC = () => {
   return (
-    <LanguageProvider>
-      <AccessibilityProvider>
-        <AuthProvider>
-          <DemoProvider>
-            <BrowserRouter>
-              <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800 selection:bg-amber-100 selection:text-amber-900 font-sans">
-                {/* Persistent SIH Demo Mode Banner */}
-                <DemoBanner />
-
-                {/* Primary Accessible Navigation */}
-                <Navbar />
-
-                {/* Main Dynamic View */}
-                <main className="flex-1">
-                  <Routes>
-                    <Route path="/" element={<LandingPage />} />
-                    <Route path="/auth" element={<AuthPage />} />
-                    <Route path="/assistant" element={<VoiceAssistantPage />} />
-                    <Route path="/profile" element={<ProfilePage />} />
-                    <Route path="/skills" element={<SkillAssessmentPage />} />
-                    <Route path="/skill-gap" element={<SkillGapPage />} />
-                    <Route path="/training" element={<TrainingPage />} />
-                    <Route path="/livelihood" element={<LivelihoodMapPage />} />
-                    <Route path="/jobs" element={<JobsPage />} />
-                    <Route path="/saved" element={<SavedRecommendationsPage />} />
-                    <Route path="/dashboard" element={<ProgressDashboardPage />} />
-                    <Route path="/admin" element={<AdminDashboardPage />} />
-                    <Route path="/about" element={<AboutPage />} />
-                    <Route path="/help" element={<HelpPage />} />
-                  </Routes>
-                </main>
-
-                {/* Government Ecosystem Compliant Footer */}
-                <Footer />
-              </div>
-            </BrowserRouter>
-          </DemoProvider>
-        </AuthProvider>
-      </AccessibilityProvider>
-    </LanguageProvider>
+    <BrowserRouter>
+      <MainAppContent />
+    </BrowserRouter>
   );
 };
 
 export default App;
-

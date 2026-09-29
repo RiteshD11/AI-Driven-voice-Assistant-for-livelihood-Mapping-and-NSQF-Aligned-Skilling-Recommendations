@@ -28,7 +28,7 @@ export const ProgressDashboardPage: React.FC = () => {
               <span>लाभार्थी प्रगति डैशबोर्ड (Beneficiary Dashboard)</span>
             </div>
             <h1 className="text-2xl font-extrabold text-slate-900">
-              नमस्ते, {currentProfile.name}
+              नमस्ते, {currentProfile.name || currentProfile.fullName || 'रामेश्वर शिंदे'}
             </h1>
             <p className="text-xs text-slate-500">
               आपकी कौशल एवं आजीविका यात्रा की वर्तमान स्थिति
@@ -49,9 +49,9 @@ export const ProgressDashboardPage: React.FC = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="gov-card p-4 space-y-1">
             <span className="text-[11px] font-semibold text-slate-500 block">प्रोफ़ाइल पूर्णता</span>
-            <div className="text-2xl font-black text-blue-900">{currentProfile.profileCompletion}%</div>
+            <div className="text-2xl font-black text-blue-900">{currentProfile.profileCompletion || currentProfile.completenessScore || 85}%</div>
             <div className="w-full bg-slate-100 rounded-full h-1.5 mt-2">
-              <div className="bg-blue-900 h-1.5 rounded-full" style={{ width: `${currentProfile.profileCompletion}%` }}></div>
+              <div className="bg-blue-900 h-1.5 rounded-full" style={{ width: `${currentProfile.profileCompletion || currentProfile.completenessScore || 85}%` }}></div>
             </div>
           </div>
 

@@ -20,8 +20,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     email: 'rajesh.kumar@aarohan.demo',
     phone: '9876543210',
     role: 'beneficiary',
+    language: 'hi',
     preferredLanguage: 'hi',
-    consentGiven: true
+    consentGiven: true,
+    createdAt: '2026-03-29T10:00:00Z'
   });
 
   const [isConsentGiven, setConsentGiven] = useState<boolean>(true);

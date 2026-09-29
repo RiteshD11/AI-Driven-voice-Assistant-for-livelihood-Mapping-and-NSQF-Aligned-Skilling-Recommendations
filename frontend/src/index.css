@@ -1,51 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Plus Jakarta Sans', 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
   body {
-    @apply bg-slate-50 text-slate-800 antialiased;
+    @apply bg-[#0c121e] text-slate-100 antialiased selection:bg-amber-500/30 selection:text-amber-200 overflow-x-hidden;
+    background-image: 
+      radial-gradient(at 15% 15%, rgba(217, 119, 6, 0.08) 0px, transparent 55%),
+      radial-gradient(at 85% 85%, rgba(14, 165, 233, 0.07) 0px, transparent 55%),
+      radial-gradient(at 50% 50%, rgba(99, 102, 241, 0.04) 0px, transparent 70%);
+    background-attachment: fixed;
   }
 }
 
-/* Custom UI enhancements for government social-impact aesthetic */
-.gov-gradient-header {
-  background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #1e3a5f 100%);
+/* Smarak AR-inspired Glassmorphism and Card Aesthetics */
+.glass-pill {
+  @apply bg-slate-900/75 backdrop-blur-xl border border-slate-700/60 shadow-2xl;
 }
 
-.gov-card {
-  @apply bg-white rounded-xl border border-slate-200/80 shadow-sm transition-all duration-200 hover:shadow-md;
+.glass-card {
+  @apply bg-slate-900/60 backdrop-blur-md border border-slate-800/80 shadow-xl transition-all duration-300;
 }
 
-.pulse-mic-active {
-  animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+.glass-card-hover {
+  @apply glass-card hover:border-amber-500/40 hover:bg-slate-800/70 hover:shadow-amber-500/10 hover:shadow-2xl hover:-translate-y-1;
+}
+
+.glass-card-active {
+  @apply bg-gradient-to-b from-slate-800/90 to-slate-900/90 border-amber-500/50 shadow-amber-500/15 shadow-2xl;
+}
+
+.gradient-text-gold {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-200 via-amber-400 to-orange-400;
+}
+
+.gradient-text-civic {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400;
+}
+
+.gradient-border-gold {
+  background: linear-gradient(60deg, rgba(245, 158, 11, 0.4), rgba(251, 191, 36, 0.1), rgba(245, 158, 11, 0.4));
+}
+
+/* Voice Mic Pulsing Ring Animation */
+.pulse-mic-glow {
+  animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
 }
 
 @keyframes pulse-ring {
   0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.7);
+    transform: scale(0.96);
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.75);
   }
-  70% {
+  65% {
     transform: scale(1.05);
-    box-shadow: 0 0 0 18px rgba(217, 119, 6, 0);
+    box-shadow: 0 0 0 28px rgba(245, 158, 11, 0);
   }
   100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(217, 119, 6, 0);
+    transform: scale(0.96);
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
   }
 }
 
-/* High contrast mode for accessibility */
-.high-contrast {
-  filter: contrast(125%);
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
 }
 
-.font-large {
-  font-size: 1.15rem;
+::-webkit-scrollbar-track {
+  background: #090e17;
 }
 
-.font-extra-large {
-  font-size: 1.3rem;
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
 }
 
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
