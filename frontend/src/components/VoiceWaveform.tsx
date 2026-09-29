@@ -3,58 +3,53 @@ import { cn } from '../lib/utils';
 
 interface VoiceWaveformProps {
   levels: number[];
-  isActive: boolean;
-  state?: 'listening' | 'speaking' | 'processing' | 'idle';
+  isActive?: boolean;
+  state?: 'idle' | 'listening' | 'speaking' | 'processing';
   className?: string;
-  barsCount?: number;
 }
 
 export const VoiceWaveform: React.FC<VoiceWaveformProps> = ({
   levels,
-  isActive,
+  isActive = false,
   state = 'idle',
   className,
 }) => {
-  const getBarColor = (index: number) => {
-    if (state === 'listening') {
-      return index % 2 === 0 ? 'bg-amber-400' : 'bg-orange-400';
+  const defaultBars = levels.length > 0 ? levels : [15, 25, 40, 20, 50, 30, 70, 45, 60, 35, 80, 50, 30, 20];
+
+  const getBarColor = () => {
+    switch (state) {
+      case 'listening':
+        return 'bg-gradient-to-t from-amber-500 to-orange-400';
+      case 'speaking':
+        return 'bg-gradient-to-t from-emerald-500 to-teal-400';
+      case 'processing':
+        return 'bg-gradient-to-t from-sky-400 to-indigo-400';
+      default:
+        return 'bg-neutral-300';
     }
-    if (state === 'speaking') {
-      return index % 2 === 0 ? 'bg-cyan-400' : 'bg-sky-400';
-    }
-    if (state === 'processing') {
-      return 'bg-purple-400';
-    }
-    return 'bg-slate-600';
   };
 
   return (
     <div
       className={cn(
-        'flex items-center justify-center gap-1.5 h-16 px-6 py-2 rounded-2xl glass-card border border-slate-700/50 overflow-hidden',
-        isActive ? 'border-amber-500/40 bg-slate-900/80 shadow-lg shadow-amber-500/5' : 'opacity-70',
+        'flex items-center justify-center gap-1.5 h-16 px-4 py-2 rounded-2xl bg-neutral-100/70 border border-[#E7E7E3] transition-all',
+        isActive ? 'border-amber-300/80 shadow-sm' : '',
         className
       )}
+      role="img"
+      aria-label="Audio waveform visualizer"
     >
-      {levels.map((level, idx) => {
-        const heightPercent = isActive ? Math.max(15, Math.min(100, level)) : 18;
+      {defaultBars.map((level, idx) => {
+        const heightPercent = isActive ? Math.max(12, Math.min(100, level)) : 16;
         return (
           <div
             key={idx}
-            className="w-1.5 rounded-full transition-all duration-150 ease-out"
+            className={cn('w-1.5 rounded-full transition-all duration-150', getBarColor())}
             style={{
               height: `${heightPercent}%`,
-              backgroundColor: isActive ? undefined : '#475569',
+              transitionDelay: `${idx * 15}ms`,
             }}
-          >
-            <div
-              className={cn(
-                'w-full h-full rounded-full transition-all duration-150',
-                isActive && getBarColor(idx),
-                isActive && 'shadow-sm shadow-amber-400/30'
-              )}
-            />
-          </div>
+          />
         );
       })}
     </div>

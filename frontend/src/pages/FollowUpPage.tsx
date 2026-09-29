@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { usePathway } from '../hooks/usePathway';
 import { OutcomeCard } from '../components/OutcomeCard';
 import { LoadingState } from '../components/LoadingState';
 import { ErrorState } from '../components/ErrorState';
 import { ProgressIndicator } from '../components/ProgressIndicator';
-import { CheckCircle2, Award, ArrowRight } from 'lucide-react';
+import { CheckCircle2, ArrowRight } from 'lucide-react';
 
 interface FollowUpPageProps {
   onCompleteJourney: () => void;
@@ -38,35 +38,23 @@ export const FollowUpPage: React.FC<FollowUpPageProps> = ({ onCompleteJourney })
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 py-6 flex flex-col items-center">
-      {/* Progress Step */}
-      <div className="w-full max-w-xl mb-6">
-        <ProgressIndicator
-          current={8}
-          total={8}
-          label="Outcome Tracking & Retention"
-          variant="emerald"
-        />
-      </div>
-
-      <OutcomeCard
-        outcome={outcome}
-      />
+      <OutcomeCard outcome={outcome} />
 
       {/* Completion Banner */}
-      <div className="mt-8 p-6 rounded-3xl glass-card border border-emerald-500/30 text-center max-w-2xl w-full">
-        <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto mb-3">
+      <div className="mt-8 p-6 rounded-[24px] bg-white border border-[#E7E7E3] text-center max-w-2xl w-full shadow-card">
+        <div className="w-12 h-12 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center mx-auto mb-3">
           <CheckCircle2 className="w-6 h-6" />
         </div>
-        <h3 className="text-xl font-bold text-white">Full Livelihood Cycle Verified</h3>
-        <p className="text-xs text-slate-400 mt-1 max-w-md mx-auto">
-          You have experienced the complete PS97 journey: Voice → Profile → Skill Gap → NSQF Training → Opportunity → Placement → Outcome Tracking.
+        <h3 className="text-xl font-bold text-[#181818]">Full Livelihood Cycle Complete</h3>
+        <p className="text-xs text-[#666666] mt-1 max-w-md mx-auto">
+          You have experienced the complete UNNATI journey: Voice → Profile → Skill Gap → NSQF Training → Opportunity → Placement → Outcome Tracking.
         </p>
 
         <button
           onClick={onCompleteJourney}
-          className="mt-6 inline-flex items-center gap-2 px-8 py-3 rounded-full bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold text-xs border border-amber-500/40 transition-all active:scale-95"
+          className="mt-6 inline-flex items-center gap-2 px-8 py-3 rounded-full bg-neutral-100 hover:bg-neutral-200 text-[#181818] font-bold text-xs transition-all active:scale-95"
         >
-          <span>Return to Dashboard or Restart Journey</span>
+          <span>Return to Homepage (होमपेज पर जाएं)</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>

@@ -26,7 +26,7 @@ export const mockLivelihoodPathway: LivelihoodPathway = {
       description: 'Your existing skills in basic electrical repairs and equipment handling have been documented via conversational voice.',
       status: 'completed',
       duration: 'Completed Today',
-      partnerAgency: 'Kaushal Saathi Platform'
+      partnerAgency: 'UNNATI Platform'
     },
     {
       stepNumber: 2,

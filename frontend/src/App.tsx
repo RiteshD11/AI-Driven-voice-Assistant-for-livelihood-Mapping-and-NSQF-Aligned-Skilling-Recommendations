@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { useLanguageState } from './hooks/useLanguage';
 import { useDemoMode, DEMO_STEPS } from './hooks/useDemoMode';
@@ -6,7 +6,7 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { DemoFloatingBar } from './components/DemoFloatingBar';
 
-// PS97 Dedicated Pages
+// UNNATI Beneficiary & Admin Pages
 import { LandingPage } from './pages/LandingPage';
 import { VoiceJourneyPage } from './pages/VoiceJourneyPage';
 import { ProfilePage } from './pages/ProfilePage';
@@ -15,13 +15,34 @@ import { RecommendationsPage } from './pages/RecommendationsPage';
 import { PathwayPage } from './pages/PathwayPage';
 import { OpportunitiesPage } from './pages/OpportunitiesPage';
 import { FollowUpPage } from './pages/FollowUpPage';
+import { ProgressDashboardPage } from './pages/ProgressDashboardPage';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
 import { Recommendation } from './types';
 
 const MainAppContent: React.FC = () => {
   const { language, setLanguage } = useLanguageState();
-  const [activeView, setActiveView] = useState<string>('landing');
-  const [userRole, setUserRole] = useState<'beneficiary' | 'admin'>('beneficiary');
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // State-based view with URL synchronization
+  const [activeView, setActiveView] = useState<string>(() => {
+    const path = window.location.pathname.replace(/^\//, '');
+    if (path === 'admin') return 'admin';
+    if (path === 'progress') return 'progress';
+    if (path === 'voice') return 'voice';
+    if (path === 'profile') return 'profile';
+    if (path === 'skill-gap') return 'skill-gap';
+    if (path === 'recommendations') return 'recommendations';
+    if (path === 'pathway') return 'pathway';
+    if (path === 'training') return 'training';
+    if (path === 'opportunities') return 'opportunities';
+    if (path === 'follow-up') return 'follow-up';
+    return 'landing';
+  });
+
+  const [userRole, setUserRole] = useState<'beneficiary' | 'admin'>(() => {
+    return window.location.pathname.startsWith('/admin') ? 'admin' : 'beneficiary';
+  });
 
   // Evaluator Demo Mode
   const {
@@ -34,7 +55,7 @@ const MainAppContent: React.FC = () => {
     prevStep,
     goToStep,
   } = useDemoMode((route: string) => {
-    setActiveView(route);
+    navigateTo(route);
   });
 
   const handleStartDemo = () => {
@@ -45,20 +66,45 @@ const MainAppContent: React.FC = () => {
   const handleToggleRole = (role: 'beneficiary' | 'admin') => {
     setUserRole(role);
     if (role === 'admin') {
-      setActiveView('admin');
+      navigateTo('admin');
     } else {
-      setActiveView('landing');
+      navigateTo('landing');
     }
   };
 
   const navigateTo = (view: string) => {
     setActiveView(view);
+    if (view === 'admin') {
+      setUserRole('admin');
+      navigate('/admin');
+    } else if (view === 'landing') {
+      setUserRole('beneficiary');
+      navigate('/');
+    } else {
+      setUserRole('beneficiary');
+      navigate(`/${view}`);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Sync with browser URL change (back/forward)
+  useEffect(() => {
+    const path = location.pathname.replace(/^\//, '');
+    if (path === 'admin') {
+      setUserRole('admin');
+      setActiveView('admin');
+    } else if (path === '') {
+      setUserRole('beneficiary');
+      setActiveView('landing');
+    } else {
+      setUserRole('beneficiary');
+      setActiveView(path);
+    }
+  }, [location.pathname]);
+
   return (
-    <div className="min-h-screen flex flex-col bg-[#0c121e] text-slate-100 selection:bg-amber-500/30 selection:text-amber-200">
-      {/* Floating Glassmorphism Pill Navbar */}
+    <div className="min-h-screen flex flex-col bg-[#F7F7F4] text-[#181818] selection:bg-amber-100 selection:text-amber-900 font-sans">
+      {/* Floating White Navbar */}
       <Navbar
         activeView={activeView}
         onNavigate={navigateTo}
@@ -72,15 +118,31 @@ const MainAppContent: React.FC = () => {
 
       {/* Main Content Area */}
       <main className="flex-1 w-full pt-4 pb-20">
-        {userRole === 'admin' ? (
-          <AdminDashboardPage />
+        {userRole === 'admin' || activeView === 'admin' ? (
+          <div className="w-full">
+            {/* Top link back to beneficiary view */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-2 pb-1 flex justify-end">
+              <button
+                onClick={() => handleToggleRole('beneficiary')}
+                className="text-xs font-semibold text-sky-700 hover:text-sky-800 bg-sky-50 border border-sky-200/80 px-3 py-1.5 rounded-full flex items-center gap-1.5 transition-colors"
+              >
+                <span>← Return to Beneficiary Experience</span>
+              </button>
+            </div>
+            <AdminDashboardPage />
+          </div>
         ) : (
           <>
             {activeView === 'landing' && (
               <LandingPage
                 currentLanguage={language}
                 onSelectLanguage={setLanguage}
-                onStartJourney={() => navigateTo('voice')}
+                onStartJourney={() => {
+                  try {
+                    localStorage.removeItem('voice_extracted_profile');
+                  } catch (_) {}
+                  navigateTo('voice');
+                }}
                 onExploreHowItWorks={() => navigateTo('skill-gap')}
                 onStartDemo={handleStartDemo}
               />
@@ -95,6 +157,7 @@ const MainAppContent: React.FC = () => {
 
             {activeView === 'profile' && (
               <ProfilePage
+                isDemo={isDemoActive}
                 onAnalyzeSkills={() => navigateTo('skill-gap')}
               />
             )}
@@ -111,7 +174,21 @@ const MainAppContent: React.FC = () => {
               />
             )}
 
+            {activeView === 'why-recommendation' && (
+              <RecommendationsPage
+                onSelectPathway={(rec: Recommendation) => navigateTo('pathway')}
+                autoOpenReason={true}
+              />
+            )}
+
             {activeView === 'pathway' && (
+              <PathwayPage
+                onStartTraining={() => navigateTo('opportunities')}
+                onExploreOpportunities={() => navigateTo('opportunities')}
+              />
+            )}
+
+            {activeView === 'training' && (
               <PathwayPage
                 onStartTraining={() => navigateTo('opportunities')}
                 onExploreOpportunities={() => navigateTo('opportunities')}
@@ -124,14 +201,17 @@ const MainAppContent: React.FC = () => {
               />
             )}
 
+            {activeView === 'progress' && (
+              <ProgressDashboardPage
+                onNavigateToVoice={() => navigateTo('voice')}
+                onNavigateToOpportunities={() => navigateTo('opportunities')}
+              />
+            )}
+
             {activeView === 'follow-up' && (
               <FollowUpPage
                 onCompleteJourney={() => navigateTo('landing')}
               />
-            )}
-
-            {activeView === 'admin' && (
-              <AdminDashboardPage />
             )}
           </>
         )}
@@ -149,7 +229,7 @@ const MainAppContent: React.FC = () => {
         />
       )}
 
-      {/* Comprehensive SIH PM-AJAY Footer */}
+      {/* Comprehensive SIH UNNATI PM-AJAY Footer */}
       <Footer />
     </div>
   );

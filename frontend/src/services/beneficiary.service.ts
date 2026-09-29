@@ -4,8 +4,24 @@ import { activeBeneficiary, mockBeneficiaries } from '../data/mock/beneficiaries
 
 export const beneficiaryService = {
   async getProfile(id?: string): Promise<ApiResponse<Beneficiary>> {
-    const ben = (id ? mockBeneficiaries.find(b => b.id === id) : null) || activeBeneficiary;
-    return { data: ben, status: 200 };
+    let voiceSaved: any = null;
+    try {
+      const item = typeof localStorage !== 'undefined' ? localStorage.getItem('voice_extracted_profile') : null;
+      if (item) voiceSaved = JSON.parse(item);
+    } catch (_) {}
+
+    const hasRealVoice = Boolean(
+      voiceSaved && (voiceSaved.fullName || voiceSaved.education || voiceSaved.currentLivelihood || voiceSaved.skillsText || voiceSaved.interestText)
+    );
+
+    const benBase = (id ? mockBeneficiaries.find(b => b.id === id) : null) || activeBeneficiary;
+    const dynamicBen: Beneficiary = {
+      ...benBase,
+      name: voiceSaved?.fullName ? voiceSaved.fullName : (hasRealVoice ? 'Beneficiary (लाभार्थी)' : benBase.name),
+      district: voiceSaved?.district || benBase.district,
+    };
+
+    return { data: dynamicBen, status: 200 };
   },
 
   async getActiveBeneficiary(): Promise<Beneficiary> {

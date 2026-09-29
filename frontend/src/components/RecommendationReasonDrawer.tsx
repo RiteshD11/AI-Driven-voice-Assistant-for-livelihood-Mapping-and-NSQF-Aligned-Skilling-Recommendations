@@ -2,17 +2,16 @@ import React from 'react';
 import {
   X,
   CheckCircle2,
-  AlertCircle,
-  Sparkles,
+  Circle,
+  ArrowDown,
   ArrowRight,
   ShieldCheck,
   Award,
-  Zap,
-  Layers,
+  Sparkles,
+  Target,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { Recommendation, RecommendationReason } from '../types';
-import { StatusBadge } from './StatusBadge';
 
 interface RecommendationReasonDrawerProps {
   isOpen: boolean;
@@ -32,152 +31,130 @@ export const RecommendationReasonDrawer: React.FC<RecommendationReasonDrawerProp
   if (!isOpen || !recommendation) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
       <div
-        className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl glass-card border border-amber-500/40 p-6 sm:p-8 shadow-2xl shadow-amber-500/10 text-left"
+        className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-[24px] bg-white border border-[#E7E7E3] p-6 sm:p-8 shadow-modal text-left"
         onClick={e => e.stopPropagation()}
       >
-        {/* Top Accent Gradient */}
-        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 via-orange-500 to-cyan-400" />
+        {/* Top Accent Strip */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500" />
 
         {/* Close Button */}
         <button
           onClick={onClose}
-          aria-label="Close Explainable AI Drawer"
-          className="absolute top-5 right-5 p-2 rounded-full glass-card hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
+          aria-label="Close explainability modal"
+          className="absolute top-5 right-5 p-2 rounded-full hover:bg-neutral-100 text-[#8A8A8A] hover:text-[#181818] transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
 
-        {/* Drawer Header */}
-        <div className="mb-6 pb-4 border-b border-slate-800">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse" />
-            <span className="text-xs font-mono font-semibold tracking-wider text-cyan-400 uppercase">
-              Explainable AI (XAI) Recommendation Audit
-            </span>
+        {/* Header */}
+        <div className="mb-6 pb-4 border-b border-[#E7E7E3]">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200/80 text-amber-800 text-xs font-semibold mb-2">
+            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+            <span>Explainable AI (XAI) Recommendation</span>
           </div>
-          <h3 className="text-2xl font-extrabold text-white tracking-tight">
+          <h3 className="text-2xl font-extrabold text-[#181818] tracking-tight">
             Why this recommendation?
           </h3>
-          <p className="text-xs text-slate-400 mt-1">
-            Understanding why <span className="text-amber-300 font-semibold">{recommendation.title}</span> is tailored to your profile.
+          <p className="text-xs sm:text-sm text-[#666666] mt-1">
+            Understanding why <span className="text-[#181818] font-bold">{recommendation.title || 'Solar PV Technician'}</span> was chosen for you.
           </p>
         </div>
 
-        {/* Section 1: We Considered (Input Parameters) */}
-        <div className="mb-6">
-          <div className="flex items-center gap-2 mb-3">
-            <ShieldCheck className="w-4 h-4 text-emerald-400" />
-            <h4 className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">
-              1. Factors We Considered (हमारे विचारणीय पहलू)
-            </h4>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            {reason?.factorsConsidered ? (
-              reason.factorsConsidered.map((factor, idx) => (
-                <div
-                  key={idx}
-                  className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-start gap-2.5 text-xs"
-                >
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-semibold text-slate-200 block">{factor.criterion}</span>
-                    <span className="text-slate-400 text-[11px]">{factor.matchedValue}</span>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <>
-                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2.5 text-xs text-slate-300">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Education: 10th Pass minimum threshold met</span>
-                </div>
-                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2.5 text-xs text-slate-300">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Existing Skills: Prior manual wiring and tool familiarity</span>
-                </div>
-                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2.5 text-xs text-slate-300">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Mobility: Within 20 km travel radius</span>
-                </div>
-                <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2.5 text-xs text-slate-300">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Local Opportunity: 48 active solar installer vacancies</span>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-
-        {/* Section 2: Skill Gaps to Address */}
-        <div className="mb-6">
-          <div className="flex items-center gap-2 mb-3">
-            <AlertCircle className="w-4 h-4 text-amber-400" />
-            <h4 className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">
-              2. Skill Gaps to Address (संबोधित किए जाने वाले कौशल अंतर)
-            </h4>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-amber-950/20 border border-amber-500/20 space-y-2">
-            {reason?.skillGapsAddressed?.map((gap, idx) => (
-              <div key={idx} className="flex items-center gap-2 text-xs text-amber-200">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                <span>{gap}</span>
+        {/* 3-Tier Explainability Flow */}
+        <div className="space-y-3 mb-6">
+          {/* 1. YOUR PROFILE */}
+          <div className="p-4 rounded-[18px] bg-neutral-50 border border-[#E7E7E3]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#666666] block mb-2.5">
+              YOUR PROFILE
+            </span>
+            <div className="space-y-1.5 text-xs text-[#181818]">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>Electrical experience & tool handling</span>
               </div>
-            )) || (
-              <>
-                <div className="text-xs text-amber-200 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                  <span>Solar rooftop inverter wiring & DC power safety standards</span>
-                </div>
-                <div className="text-xs text-amber-200 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                  <span>Multimeter diagnostics & earth leakage testing</span>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-
-        {/* Section 3: Recommended NSQF Pathway */}
-        <div className="mb-6">
-          <div className="flex items-center gap-2 mb-3">
-            <Award className="w-4 h-4 text-cyan-400" />
-            <h4 className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">
-              3. Recommended NSQF Pathway (प्रमाणित योग्यता मार्ग)
-            </h4>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-cyan-950/20 border border-cyan-500/30 flex items-center justify-between gap-4">
-            <div>
-              <div className="text-sm font-bold text-white">{recommendation.title}</div>
-              <div className="text-xs text-cyan-300 font-mono mt-0.5">
-                Qualification Pack: {recommendation.qualificationCode || 'SGJ/Q0101'} · {recommendation.nsqfLevel}
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>Interested in machinery & clean technology</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>Prefers wage employment with steady monthly income</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>Can travel up to 20 km for skilling and placement</span>
               </div>
             </div>
-            <StatusBadge label="100% GIA FUNDED" variant="success" size="sm" />
+          </div>
+
+          {/* Connector Down Arrow */}
+          <div className="flex justify-center">
+            <div className="w-7 h-7 rounded-full bg-neutral-100 flex items-center justify-center text-[#8A8A8A]">
+              <ArrowDown className="w-3.5 h-3.5" />
+            </div>
+          </div>
+
+          {/* 2. SKILL GAP */}
+          <div className="p-4 rounded-[18px] bg-amber-50/70 border border-amber-200">
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-900 block mb-2.5">
+              SKILL GAP
+            </span>
+            <div className="space-y-1.5 text-xs text-[#181818]">
+              <div className="flex items-center gap-2">
+                <Circle className="w-3.5 h-3.5 text-amber-600 stroke-[2.5] shrink-0" />
+                <span>Solar PV panel installation & rooftop mounting</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Circle className="w-3.5 h-3.5 text-amber-600 stroke-[2.5] shrink-0" />
+                <span>DC electrical safety & surge protection standards</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Connector Down Arrow */}
+          <div className="flex justify-center">
+            <div className="w-7 h-7 rounded-full bg-neutral-100 flex items-center justify-center text-[#8A8A8A]">
+              <ArrowDown className="w-3.5 h-3.5" />
+            </div>
+          </div>
+
+          {/* 3. RECOMMENDATION */}
+          <div className="p-4 rounded-[18px] bg-neutral-50 border border-[#E7E7E3] flex items-center justify-between gap-3">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-wider text-amber-700 block mb-1">
+                RECOMMENDATION
+              </span>
+              <div className="text-base font-bold text-[#181818]">{recommendation.title || 'Solar PV Technician'}</div>
+              <div className="text-xs text-[#666666] mt-0.5">
+                Accredited NSQF Level {recommendation.nsqfLevel || '3'} · 3 Months · Free PM-AJAY GIA
+              </div>
+            </div>
+            <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-sm">
+              <Award className="w-5 h-5" />
+            </div>
           </div>
         </div>
 
         {/* Footer Actions */}
-        <div className="pt-4 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="pt-4 border-t border-[#E7E7E3] flex items-center justify-between gap-3">
           <button
             onClick={onClose}
-            className="w-full sm:w-auto px-6 py-2.5 rounded-full glass-card hover:bg-slate-800 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
+            className="px-5 py-2.5 rounded-full hover:bg-neutral-100 text-xs font-semibold text-[#666666] hover:text-[#181818] transition-colors"
           >
             Close
           </button>
+
           {onProceedToPathway && (
             <button
               onClick={() => {
                 onClose();
                 onProceedToPathway(recommendation);
               }}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 text-xs font-bold transition-all shadow-lg active:scale-95"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-bold transition-all shadow-sm active:scale-95"
             >
-              <span>Explore This Pathway</span>
+              <span>Explore Pathway</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
           )}

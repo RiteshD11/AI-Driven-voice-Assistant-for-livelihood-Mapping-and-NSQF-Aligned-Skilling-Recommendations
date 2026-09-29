@@ -5,8 +5,6 @@ import {
   X,
   Play,
   Sparkles,
-  Info,
-  CheckCircle2,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { DEMO_STEPS } from '../hooks/useDemoMode';
@@ -35,11 +33,11 @@ export const DemoFloatingBar: React.FC<DemoFloatingBarProps> = ({
 
   return (
     <div className={cn('fixed bottom-4 left-0 right-0 z-50 px-4 max-w-4xl mx-auto', className)}>
-      <div className="rounded-3xl glass-pill border border-amber-500/50 shadow-2xl p-4 sm:p-5 relative overflow-hidden backdrop-blur-2xl">
-        {/* Top subtle progress bar line */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-slate-800">
+      <div className="rounded-[22px] bg-white border border-[#E7E7E3] shadow-modal p-4 sm:p-5 relative overflow-hidden">
+        {/* Top subtle progress line */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-neutral-100">
           <div
-            className="h-full bg-gradient-to-r from-amber-400 via-orange-500 to-cyan-400 transition-all duration-300"
+            className="h-full bg-gradient-to-r from-amber-500 to-orange-500 transition-all duration-300"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
@@ -48,28 +46,28 @@ export const DemoFloatingBar: React.FC<DemoFloatingBarProps> = ({
           {/* Left: Step Info */}
           <div className="flex-1 text-left w-full sm:w-auto">
             <div className="flex items-center gap-2 mb-1">
-              <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
-              <span className="text-[11px] font-mono font-bold text-amber-300 uppercase tracking-wider">
-                EVALUATOR DEMO TOUR · STEP {currentStepIndex + 1} OF {totalSteps}
+              <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+              <span className="text-[11px] font-mono font-bold text-amber-800 uppercase tracking-wider">
+                EVALUATOR TOUR · STEP {currentStepIndex + 1} OF {totalSteps}
               </span>
-              <span className="text-slate-500">·</span>
-              <span className="text-[11px] font-mono text-cyan-300">{currentStep.stageName}</span>
+              <span className="text-[#8A8A8A]">·</span>
+              <span className="text-[11px] font-mono text-[#666666] font-semibold">{currentStep.stageName}</span>
             </div>
 
-            <h4 className="text-sm sm:text-base font-bold text-white tracking-tight">
+            <h4 className="text-sm sm:text-base font-bold text-[#181818] tracking-tight">
               {currentStep.title}
             </h4>
-            <p className="text-xs text-slate-300 mt-0.5 line-clamp-1">
+            <p className="text-xs text-[#666666] mt-0.5 line-clamp-1">
               {currentStep.sihObjective}
             </p>
           </div>
 
-          {/* Center / Right: Nav Controls */}
+          {/* Right: Nav Controls */}
           <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
             <button
               onClick={onPrev}
               disabled={currentStepIndex === 0}
-              className="p-2 rounded-full glass-card hover:bg-slate-800 disabled:opacity-30 disabled:pointer-events-none text-slate-300 transition-all"
+              className="p-2 rounded-full border border-[#E7E7E3] hover:bg-neutral-100 disabled:opacity-30 disabled:pointer-events-none text-[#666666] transition-all"
               title="Previous Step"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -84,10 +82,10 @@ export const DemoFloatingBar: React.FC<DemoFloatingBarProps> = ({
                   className={cn(
                     'w-2 h-2 rounded-full transition-all duration-200',
                     idx === currentStepIndex
-                      ? 'w-6 bg-amber-400'
+                      ? 'w-6 bg-amber-500'
                       : idx < currentStepIndex
-                      ? 'bg-emerald-400'
-                      : 'bg-slate-700 hover:bg-slate-500'
+                      ? 'bg-emerald-500'
+                      : 'bg-neutral-200 hover:bg-neutral-300'
                   )}
                   title={`Jump to: ${step.title}`}
                 />
@@ -96,7 +94,7 @@ export const DemoFloatingBar: React.FC<DemoFloatingBarProps> = ({
 
             <button
               onClick={onNext}
-              className="inline-flex items-center gap-1 px-4 py-2 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 font-bold text-xs shadow-md hover:scale-105 active:scale-95 transition-all"
+              className="inline-flex items-center gap-1 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-xs shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-all"
             >
               <span>{currentStepIndex === totalSteps - 1 ? 'Finish Tour' : 'Next Step'}</span>
               <ChevronRight className="w-3.5 h-3.5" />
@@ -104,7 +102,7 @@ export const DemoFloatingBar: React.FC<DemoFloatingBarProps> = ({
 
             <button
               onClick={onClose}
-              className="p-2 rounded-full hover:bg-slate-800 text-slate-400 hover:text-white transition-colors ml-1"
+              className="p-2 rounded-full hover:bg-neutral-100 text-[#8A8A8A] hover:text-[#181818] transition-colors ml-1"
               title="Exit Demo Tour"
             >
               <X className="w-4 h-4" />

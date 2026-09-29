@@ -5,9 +5,9 @@ export const mockVoiceQuestions: VoiceQuestion[] = [
     id: 'vq-01',
     index: 1,
     questionText: {
-      en: "Hello! Welcome to Kaushal Saathi. What is your name and where do you live?",
-      hi: "नमस्ते! कौशल साथी में आपका स्वागत है। आपका नाम क्या है और आप कहाँ रहते हैं?",
-      mr: "नमस्कार! कौशल साथीमध्ये आपले स्वागत आहे. आपले नाव काय आहे आणि आपण कुठे राहता?"
+      en: "Hello! Welcome to UNNATI. What is your name and where do you live?",
+      hi: "नमस्ते! उन्नति में आपका स्वागत है। आपका नाम क्या है और आप कहाँ रहते हैं?",
+      mr: "नमस्कार! उन्नतीमध्ये आपले स्वागत आहे. आपले नाव काय आहे आणि आपण कुठे राहता?"
     },
     expectedAnswers: [
       "मेरा नाम रामेश्वर शिंदे है, मैं पुणे के पास रहता हूँ।",

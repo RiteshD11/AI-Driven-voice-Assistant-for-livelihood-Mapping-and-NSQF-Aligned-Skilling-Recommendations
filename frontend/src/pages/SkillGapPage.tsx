@@ -37,16 +37,6 @@ export const SkillGapPage: React.FC<SkillGapPageProps> = ({ onExploreRecommendat
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 py-6 flex flex-col items-center">
-      {/* Progress Step */}
-      <div className="w-full max-w-xl mb-6">
-        <ProgressIndicator
-          current={4}
-          total={8}
-          label="Skill Gap Assessment"
-          variant="amber"
-        />
-      </div>
-
       <SkillGapCard
         assessment={skillAssessment}
         onExploreRecommendations={onExploreRecommendations}

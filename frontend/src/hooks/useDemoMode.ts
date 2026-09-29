@@ -105,6 +105,9 @@ export function useDemoMode(onNavigate: (route: string) => void) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
   const startDemo = useCallback(() => {
+    try {
+      localStorage.removeItem('voice_extracted_profile');
+    } catch (_) {}
     setIsDemoActive(true);
     setCurrentStepIndex(0);
     onNavigate(DEMO_STEPS[0].route);

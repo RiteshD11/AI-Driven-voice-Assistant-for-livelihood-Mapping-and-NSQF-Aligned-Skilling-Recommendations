@@ -7,9 +7,10 @@ import { ProgressIndicator } from '../components/ProgressIndicator';
 
 interface ProfilePageProps {
   onAnalyzeSkills: () => void;
+  isDemo?: boolean;
 }
 
-export const ProfilePage: React.FC<ProfilePageProps> = ({ onAnalyzeSkills }) => {
+export const ProfilePage: React.FC<ProfilePageProps> = ({ onAnalyzeSkills, isDemo = false }) => {
   const { beneficiary, profile, loading, error, refresh } = useBeneficiary('ben-sc-2026-001');
 
   if (loading) {
@@ -37,21 +38,12 @@ export const ProfilePage: React.FC<ProfilePageProps> = ({ onAnalyzeSkills }) => 
 
   return (
     <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 py-6 flex flex-col items-center">
-      {/* Step Tracker */}
-      <div className="w-full max-w-xl mb-6">
-        <ProgressIndicator
-          current={3}
-          total={8}
-          label="Livelihood Understanding"
-          variant="amber"
-        />
-      </div>
-
       {/* Main Profile Presentation */}
       <ProfileCard
         beneficiary={beneficiary}
         profile={profile}
         onAnalyzeSkills={onAnalyzeSkills}
+        isDemo={isDemo}
       />
     </div>
   );

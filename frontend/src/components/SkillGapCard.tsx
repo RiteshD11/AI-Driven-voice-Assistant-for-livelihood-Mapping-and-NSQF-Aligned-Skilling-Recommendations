@@ -1,17 +1,15 @@
 import React from 'react';
 import {
   CheckCircle2,
-  AlertCircle,
+  Circle,
+  ArrowDown,
   ArrowRight,
   Sparkles,
-  Zap,
   Target,
-  ShieldCheck,
-  ChevronDown,
+  Award,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { SkillAssessment } from '../types';
-import { StatusBadge } from './StatusBadge';
 
 interface SkillGapCardProps {
   assessment: SkillAssessment;
@@ -25,172 +23,147 @@ export const SkillGapCard: React.FC<SkillGapCardProps> = ({
   className,
 }) => {
   return (
-    <div className={cn('w-full max-w-4xl mx-auto space-y-6', className)}>
-      {/* Title & Concept Header */}
+    <div className={cn('w-full max-w-3xl mx-auto space-y-6', className)}>
+      {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-2">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-mono text-xs uppercase mb-3">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Skill-Gap Assessment Engine</span>
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200/80 text-amber-800 text-xs font-semibold mb-3">
+          <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+          <span>Stage 03 · Skill Gap Assessment</span>
         </div>
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-          Where You Are <span className="text-amber-400">→</span> Where You Can Go
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#181818] tracking-tight">
+          Where You Are <span className="text-amber-600">→</span> Where You Can Go
         </h2>
-        <p className="text-xs sm:text-sm text-slate-400 mt-1.5">
-          आपकी वर्तमान क्षमताओं और उच्च आय वाले कौशल के बीच का अंतर।
+        <p className="text-xs sm:text-sm text-[#666666] mt-1.5">
+          Identifying the exact skilling bridge between your current abilities and certified employment.
         </p>
       </div>
 
-      {/* Main Visual Comparison Panel */}
-      <div className="rounded-3xl glass-card border border-slate-700/80 p-6 sm:p-8 shadow-2xl relative overflow-hidden">
-        {/* Top Target Badge Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-6 mb-6 border-b border-slate-800">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center shadow-md">
-              <Target className="w-6 h-6" />
+      {/* Main Flow Card */}
+      <div className="rounded-[24px] bg-white border border-[#E7E7E3] p-6 sm:p-9 shadow-card relative overflow-hidden">
+        {/* Step 1: YOUR CURRENT SKILLS */}
+        <div className="p-5 rounded-[20px] bg-neutral-50/80 border border-[#E7E7E3]">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#181818]">
+              YOUR CURRENT SKILLS
+            </span>
+            <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+              Verified from voice dialog
+            </span>
+          </div>
+
+          <div className="space-y-2.5">
+            {assessment.currentSkills.map(skill => (
+              <div
+                key={skill.id}
+                className="flex items-center gap-3 p-3 rounded-[14px] bg-white border border-[#E7E7E3] text-[#181818]"
+              >
+                <div className="w-6 h-6 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-4 h-4" />
+                </div>
+                <div className="flex-1">
+                  <span className="text-sm font-semibold">{skill.name}</span>
+                  {skill.description && (
+                    <span className="text-xs text-[#8A8A8A] block">{skill.description}</span>
+                  )}
+                </div>
+                <span className="text-xs font-medium text-[#666666] capitalize">
+                  {skill.level}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Down Arrow Connector */}
+        <div className="flex justify-center my-3">
+          <div className="w-9 h-9 rounded-full bg-neutral-100 border border-[#E7E7E3] flex items-center justify-center text-[#666666]">
+            <ArrowDown className="w-4 h-4" />
+          </div>
+        </div>
+
+        {/* Step 2: SKILL GAPS */}
+        <div className="p-5 rounded-[20px] bg-amber-50/50 border border-amber-200/80">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-900">
+              SKILL GAPS TO BRIDGE
+            </span>
+            <span className="text-xs font-semibold text-amber-800 bg-amber-100/70 px-2 py-0.5 rounded-full border border-amber-300/60">
+              {assessment.skillGaps.length} targeted modules
+            </span>
+          </div>
+
+          <div className="space-y-2.5">
+            {assessment.skillGaps.map(gap => (
+              <div
+                key={gap.id}
+                className="flex items-start gap-3 p-3 rounded-[14px] bg-white border border-amber-200 text-[#181818]"
+              >
+                <div className="w-6 h-6 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 mt-0.5">
+                  <Circle className="w-3.5 h-3.5 stroke-[2.5]" />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-bold">{gap.name}</span>
+                    <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">
+                      {gap.priority} priority
+                    </span>
+                  </div>
+                  {gap.bridgeModule && (
+                    <p className="text-xs text-[#666666] mt-0.5">
+                      Required module: {gap.bridgeModule}
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Down Arrow Connector */}
+        <div className="flex justify-center my-3">
+          <div className="w-9 h-9 rounded-full bg-neutral-100 border border-[#E7E7E3] flex items-center justify-center text-[#666666]">
+            <ArrowDown className="w-4 h-4" />
+          </div>
+        </div>
+
+        {/* Step 3: TARGET PATH */}
+        <div className="p-5 rounded-[20px] bg-neutral-50 border border-[#E7E7E3]">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#666666]">
+              TARGET PATHWAY
+            </span>
+            <span className="text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-full">
+              100% PM-AJAY GIA Subsidized
+            </span>
+          </div>
+
+          <div className="flex items-center gap-3.5 p-3.5 rounded-[16px] bg-white border border-[#E7E7E3]">
+            <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 text-white flex items-center justify-center shadow-sm">
+              <Award className="w-6 h-6" />
             </div>
             <div>
-              <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400">Target Role</span>
-              <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                <span>{assessment.targetRole}</span>
-                <StatusBadge label={assessment.targetNSQFLevel} variant="warning" size="sm" />
+              <h3 className="text-base font-extrabold text-[#181818]">
+                {assessment.targetRole}
               </h3>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 self-start sm:self-auto">
-            <StatusBadge label="DEMO DATA" variant="neutral" size="sm" />
-            <div className="px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 text-xs font-mono text-emerald-400 font-semibold">
-              Readiness: {assessment.readinessScore}%
+              <p className="text-xs text-[#666666] mt-0.5">
+                Accredited NSQF Level {assessment.targetNSQFLevel} · 3 Months · Stipend Eligible
+              </p>
             </div>
           </div>
         </div>
 
-        {/* 2-Column Split: Current Skills vs. Skill Gaps */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {/* Left Column: Current Skills */}
-          <div className="rounded-2xl bg-slate-900/80 border border-emerald-500/30 p-5 relative overflow-hidden">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/5">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-emerald-400" />
-                <h4 className="text-sm font-bold text-emerald-300 uppercase tracking-wider font-mono">
-                  Current Skills (मौजूदा हुनर)
-                </h4>
-              </div>
-              <span className="text-xs font-mono text-emerald-400 font-bold">
-                {assessment.currentSkills.length} Identified
-              </span>
-            </div>
-
-            <div className="space-y-3">
-              {assessment.currentSkills.map(skill => (
-                <div
-                  key={skill.id}
-                  className="p-3 rounded-xl bg-emerald-950/20 border border-emerald-500/20 flex items-start gap-3 hover:bg-emerald-950/30 transition-colors"
-                >
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-slate-100">{skill.name}</span>
-                      <span className="text-[11px] font-mono text-emerald-400 capitalize">
-                        {skill.level}
-                      </span>
-                    </div>
-                    {skill.description && (
-                      <p className="text-xs text-slate-400 mt-0.5">{skill.description}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right Column: Skill Gaps */}
-          <div className="rounded-2xl bg-slate-900/80 border border-amber-500/30 p-5 relative overflow-hidden">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/5">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-amber-400 animate-pulse" />
-                <h4 className="text-sm font-bold text-amber-300 uppercase tracking-wider font-mono">
-                  Skill Gaps to Bridge (कौशल अंतर)
-                </h4>
-              </div>
-              <span className="text-xs font-mono text-amber-400 font-bold">
-                {assessment.skillGaps.length} Modules Needed
-              </span>
-            </div>
-
-            <div className="space-y-3">
-              {assessment.skillGaps.map(gap => (
-                <div
-                  key={gap.id}
-                  className="p-3 rounded-xl bg-amber-950/20 border border-amber-500/20 flex items-start gap-3 hover:bg-amber-950/30 transition-colors"
-                >
-                  <AlertCircle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-slate-100">{gap.name}</span>
-                      <span className={cn(
-                        'text-[10px] font-mono px-2 py-0.5 rounded-full uppercase font-bold',
-                        gap.priority === 'high' ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' :
-                        gap.priority === 'medium' ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' :
-                        'bg-sky-500/20 text-sky-300 border border-sky-500/30'
-                      )}>
-                        {gap.priority} priority
-                      </span>
-                    </div>
-                    {gap.description && (
-                      <p className="text-xs text-slate-400 mt-0.5">{gap.description}</p>
-                    )}
-                    <div className="text-[11px] text-amber-300/80 font-mono mt-1">
-                      Bridge: {gap.bridgeModule}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Visual Pathway Flow: Current Skills -> Skill Gap -> Training -> Certification -> Opportunity */}
-        <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800 mb-8">
-          <div className="text-[11px] font-mono uppercase tracking-wider text-slate-400 mb-3 text-center sm:text-left">
-            Linear Progression Pipeline (कौशल से रोजगार तक का मार्ग)
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-5 gap-2 items-center text-center">
-            <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700">
-              <div className="text-xs font-bold text-white">Current Skills</div>
-              <div className="text-[10px] text-emerald-400 font-mono">Equipment & Wire</div>
-            </div>
-            <div className="flex justify-center text-slate-500">
-              <ArrowRight className="w-4 h-4 hidden sm:block text-amber-400" />
-              <ChevronDown className="w-4 h-4 sm:hidden text-amber-400" />
-            </div>
-            <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30">
-              <div className="text-xs font-bold text-amber-300">Skill Gap</div>
-              <div className="text-[10px] text-amber-400/80 font-mono">3 Targeted Modules</div>
-            </div>
-            <div className="flex justify-center text-slate-500">
-              <ArrowRight className="w-4 h-4 hidden sm:block text-amber-400" />
-              <ChevronDown className="w-4 h-4 sm:hidden text-amber-400" />
-            </div>
-            <div className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30">
-              <div className="text-xs font-bold text-cyan-300">NSQF Certified</div>
-              <div className="text-[10px] text-cyan-400/80 font-mono">Level 3 · ₹18k/mo Job</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom CTA to explore 3 recommendations */}
+        {/* Bottom CTA to explore recommendations */}
         {onExploreRecommendations && (
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-800">
-            <div className="text-xs text-slate-400">
-              Data verified against National Skills Qualification Framework repository.
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 mt-6 border-t border-[#E7E7E3]">
+            <div className="text-xs text-[#666666]">
+              Aligned with National Skills Qualification Framework (NSQF).
             </div>
             <button
               onClick={onExploreRecommendations}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-orange-500 text-slate-950 font-bold text-sm tracking-wide shadow-xl shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-xs tracking-wide shadow-md shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
             >
               <span>Explore NSQF Recommendations (सिफारिशें देखें)</span>
-              <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+              <ArrowRight className="w-4 h-4" />
             </button>
           </div>
         )}

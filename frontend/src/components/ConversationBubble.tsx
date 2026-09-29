@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bot, User, Volume2 } from 'lucide-react';
+import { Bot, User, Volume2, Mic } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { ConversationMessage } from '../types';
 
@@ -29,40 +29,40 @@ export const ConversationBubble: React.FC<ConversationBubbleProps> = ({
       {/* Sender Avatar */}
       <div
         className={cn(
-          'w-9 h-9 rounded-2xl flex items-center justify-center shrink-0 shadow-md',
+          'w-8 h-8 rounded-xl flex items-center justify-center shrink-0 shadow-sm',
           isAssistant
-            ? 'bg-gradient-to-tr from-amber-500 to-orange-500 text-slate-950 font-bold'
-            : 'bg-slate-800 border border-slate-700 text-slate-300'
+            ? 'bg-gradient-to-tr from-amber-500 to-orange-500 text-white font-bold'
+            : 'bg-neutral-200 border border-[#E7E7E3] text-[#181818]'
         )}
       >
-        {isAssistant ? <Bot className="w-5 h-5" /> : <User className="w-5 h-5" />}
+        {isAssistant ? <Mic className="w-4 h-4" /> : <User className="w-4 h-4 text-[#666666]" />}
       </div>
 
       {/* Message Card */}
       <div
         className={cn(
-          'max-w-[85%] sm:max-w-[75%] rounded-2xl p-4 shadow-lg text-sm leading-relaxed backdrop-blur-md',
+          'max-w-[85%] sm:max-w-[75%] rounded-[18px] p-3.5 shadow-subtle text-sm leading-relaxed',
           isAssistant
-            ? 'bg-slate-900/80 border border-slate-700/80 text-slate-200 rounded-tl-sm'
-            : 'bg-gradient-to-r from-amber-600/25 to-orange-600/25 border border-amber-500/40 text-amber-100 rounded-tr-sm',
-          isLatest && 'ring-1 ring-amber-400/40'
+            ? 'bg-white border border-[#E7E7E3] text-[#181818] rounded-tl-sm'
+            : 'bg-amber-50/90 border border-amber-200 text-[#181818] rounded-tr-sm',
+          isLatest && 'ring-1 ring-amber-400/50'
         )}
       >
-        <div className="flex items-center justify-between gap-3 mb-1.5 pb-1 border-b border-white/5">
-          <span className="text-[11px] font-semibold tracking-wide uppercase font-mono text-slate-400">
-            {isAssistant ? 'Kaushal Saathi Voice AI' : 'Beneficiary Response'}
+        <div className="flex items-center justify-between gap-3 mb-1 pb-1 border-b border-neutral-100">
+          <span className="text-[10px] font-bold tracking-wide uppercase font-mono text-[#8A8A8A]">
+            {isAssistant ? 'UNNATI Voice Assistant' : 'Beneficiary Response'}
           </span>
           {isAssistant && onPlayAudio && (
             <button
               onClick={() => onPlayAudio(message.text)}
-              className="p-1 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-amber-400 transition-colors"
+              className="p-1 rounded-md hover:bg-neutral-100 text-[#666666] hover:text-amber-600 transition-colors"
               title="Hear aloud"
             >
               <Volume2 className="w-3.5 h-3.5" />
             </button>
           )}
         </div>
-        <p className="text-sm font-medium tracking-normal text-slate-100 whitespace-pre-line">
+        <p className="text-xs sm:text-sm font-medium tracking-normal text-[#181818] whitespace-pre-line">
           {message.text}
         </p>
       </div>

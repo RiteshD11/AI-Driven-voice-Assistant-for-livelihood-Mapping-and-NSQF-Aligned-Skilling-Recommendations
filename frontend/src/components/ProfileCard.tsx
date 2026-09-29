@@ -9,10 +9,10 @@ import {
   Sparkles,
   ArrowRight,
   ShieldCheck,
+  CheckCircle2,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { LivelihoodProfile, Beneficiary } from '../types';
-import { StatusBadge } from './StatusBadge';
 
 interface ProfileCardProps {
   beneficiary?: Beneficiary | null;
@@ -32,44 +32,46 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
   return (
     <div
       className={cn(
-        'w-full max-w-3xl mx-auto rounded-3xl glass-card border border-slate-700/80 p-6 sm:p-8 shadow-2xl relative overflow-hidden',
+        'w-full max-w-3xl mx-auto rounded-[24px] bg-white border border-[#E7E7E3] p-6 sm:p-9 shadow-card relative overflow-hidden',
         className
       )}
     >
-      {/* Decorative top accent gradient */}
-      <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 via-orange-500 to-cyan-400" />
+      {/* Decorative top accent */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500" />
 
       {/* Header section */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-[#E7E7E3]">
         <div>
-          <div className="flex items-center gap-2 mb-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-xs font-mono font-semibold tracking-wider text-emerald-400 uppercase">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-xs font-mono font-bold tracking-wider text-emerald-800 uppercase">
               Voice AI Profile Synthesized
             </span>
             {isDemo && (
-              <StatusBadge label="DEMO PROFILE" variant="warning" size="sm" />
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-neutral-100 text-[#666666] border border-[#E7E7E3] font-semibold">
+                DEMO PROFILE
+              </span>
             )}
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            We Understood Your Journey
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#181818] tracking-tight">
+            YOUR PROFILE
           </h2>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1">
-            हमने आपकी बातचीत के आधार पर आपकी यह आजीविका प्रोफ़ाइल तैयार की है।
+          <p className="text-xs sm:text-sm text-[#666666] mt-1">
+            Synthesized directly from your spoken conversation with UNNATI
           </p>
         </div>
 
         {beneficiary && (
-          <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-800/80 border border-slate-700/80 shrink-0">
-            <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 text-slate-950 font-extrabold flex items-center justify-center text-base shadow-md">
+          <div className="flex items-center gap-3 p-3 rounded-[16px] bg-neutral-50 border border-[#E7E7E3] shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 text-white font-extrabold flex items-center justify-center text-sm shadow-sm">
               {beneficiary.name.charAt(0)}
             </div>
             <div>
-              <div className="text-sm font-bold text-white flex items-center gap-1.5">
+              <div className="text-xs font-bold text-[#181818] flex items-center gap-1.5">
                 <span>{beneficiary.name}</span>
-                <ShieldCheck className="w-4 h-4 text-cyan-400" />
+                <ShieldCheck className="w-3.5 h-3.5 text-sky-600" />
               </div>
-              <div className="text-[11px] text-slate-400 font-mono">
+              <div className="text-[11px] text-[#8A8A8A] font-mono">
                 {beneficiary.category} · {beneficiary.age} Yrs · {beneficiary.district}
               </div>
             </div>
@@ -77,127 +79,101 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
         )}
       </div>
 
-      {/* Structured Key-Value Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-8">
-        {/* Education */}
-        <div className="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/60 flex items-start gap-3.5">
-          <div className="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
-            <GraduationCap className="w-5 h-5" />
+      {/* Human-Readable Profile Details */}
+      <div className="space-y-4 mb-8">
+        {/* Education & Current Livelihood */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="p-4 rounded-[16px] bg-neutral-50/70 border border-[#E7E7E3]">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#8A8A8A]">
+              Education
+            </span>
+            <div className="text-base font-bold text-[#181818] mt-1">{profile.education}</div>
+            <span className="text-[11px] text-[#666666]">Formal schooling completed</span>
           </div>
-          <div>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400">Education (शिक्षा)</span>
-            <div className="text-sm font-bold text-white mt-0.5">{profile.education}</div>
-            <span className="text-[11px] text-slate-500">Formal schooling completed</span>
-          </div>
-        </div>
 
-        {/* Current Livelihood */}
-        <div className="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/60 flex items-start gap-3.5">
-          <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
-            <Briefcase className="w-5 h-5" />
-          </div>
-          <div>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400">Current Livelihood (वर्तमान कार्य)</span>
-            <div className="text-sm font-bold text-white mt-0.5">{profile.currentLivelihood}</div>
-            <span className="text-[11px] text-slate-500">Primary livelihood activity</span>
+          <div className="p-4 rounded-[16px] bg-neutral-50/70 border border-[#E7E7E3]">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#8A8A8A]">
+              Current Livelihood
+            </span>
+            <div className="text-base font-bold text-[#181818] mt-1">{profile.currentLivelihood}</div>
+            <span className="text-[11px] text-[#666666]">Primary daily earning activity</span>
           </div>
         </div>
 
         {/* Existing Skills */}
-        <div className="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/60 flex items-start gap-3.5 sm:col-span-2">
-          <div className="w-9 h-9 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center shrink-0">
-            <Wrench className="w-5 h-5" />
-          </div>
-          <div className="w-full">
-            <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400">Existing Skills (मौजूदा हुनर)</span>
-            <div className="flex flex-wrap gap-2 mt-1.5">
-              {profile.existingSkills.map((skill, idx) => (
+        <div className="p-4 rounded-[16px] bg-neutral-50/70 border border-[#E7E7E3]">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-[#8A8A8A] block mb-2">
+            Skills (Innate & Practical)
+          </span>
+          <div className="flex flex-wrap gap-2">
+            {profile.existingSkills.map((skill, idx) => {
+              const skillName = typeof skill === 'string' ? skill : skill.name;
+              return (
                 <span
                   key={idx}
-                  className="px-3 py-1 rounded-lg bg-sky-950/60 border border-sky-700/40 text-sky-200 text-xs font-medium flex items-center gap-1.5"
+                  className="px-3 py-1.5 rounded-full bg-white border border-[#E7E7E3] text-[#181818] text-xs font-semibold flex items-center gap-1.5 shadow-subtle"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
-                  <span>{typeof skill === 'string' ? skill : skill.name}</span>
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>{skillName}</span>
                 </span>
-              ))}
-            </div>
+              );
+            })}
           </div>
         </div>
 
-        {/* Interests */}
-        <div className="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/60 flex items-start gap-3.5">
-          <div className="w-9 h-9 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center shrink-0">
-            <Heart className="w-5 h-5" />
-          </div>
-          <div>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400">Interests & Aspirations (रुचि)</span>
+        {/* Interests & Employment Preference */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="p-4 rounded-[16px] bg-neutral-50/70 border border-[#E7E7E3]">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#8A8A8A]">
+              Interests
+            </span>
             <div className="flex flex-wrap gap-1.5 mt-1.5">
               {profile.interests.map((item, idx) => (
                 <span
                   key={idx}
-                  className="px-2.5 py-0.5 rounded-md bg-rose-950/40 border border-rose-800/40 text-rose-200 text-xs"
+                  className="px-2.5 py-0.5 rounded-md bg-white border border-[#E7E7E3] text-[#181818] text-xs font-medium"
                 >
                   {item}
                 </span>
               ))}
             </div>
           </div>
-        </div>
 
-        {/* Mobility Preference */}
-        <div className="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/60 flex items-start gap-3.5">
-          <div className="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
-            <Navigation className="w-5 h-5" />
-          </div>
-          <div>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400">Mobility Tolerance (दूरी)</span>
-            <div className="text-sm font-bold text-white mt-0.5">{profile.mobility}</div>
-            <span className="text-[11px] text-slate-500">Commute preference for skilling</span>
-          </div>
-        </div>
-
-        {/* Employment Preference */}
-        <div className="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/60 flex items-start gap-3.5">
-          <div className="w-9 h-9 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center shrink-0">
-            <Briefcase className="w-5 h-5" />
-          </div>
-          <div>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400">Work Preference (रोजगार का प्रकार)</span>
-            <div className="text-sm font-bold text-white mt-0.5 capitalize">
-              {profile.employmentPreference === 'wage' ? 'Wage Employment (नौकरी)' : 'Self Employment (स्वरोजगार)'}
+          <div className="p-4 rounded-[16px] bg-neutral-50/70 border border-[#E7E7E3]">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#8A8A8A]">
+              Employment Preference
+            </span>
+            <div className="text-sm font-bold text-[#181818] mt-1.5 capitalize">
+              {profile.employmentPreference === 'wage' ? 'Wage Employment' : 'Self-Employment'}
             </div>
-            <span className="text-[11px] text-slate-500">Consistent monthly income priority</span>
+            <span className="text-[11px] text-[#666666]">Monthly wage stability</span>
           </div>
-        </div>
 
-        {/* Location */}
-        <div className="p-4 rounded-2xl bg-slate-800/50 border border-slate-700/60 flex items-start gap-3.5">
-          <div className="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0">
-            <MapPin className="w-5 h-5" />
-          </div>
-          <div>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400">Location (स्थान)</span>
-            <div className="text-sm font-bold text-white mt-0.5">
-              {typeof profile.location === 'string' ? profile.location : `${profile.location.district}, ${profile.location.state}`}
+          <div className="p-4 rounded-[16px] bg-neutral-50/70 border border-[#E7E7E3]">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#8A8A8A]">
+              Mobility
+            </span>
+            <div className="text-sm font-bold text-[#181818] mt-1.5">
+              {profile.mobility || 'Up to 20 km'}
             </div>
-            <span className="text-[11px] text-slate-500">PM-AJAY beneficiary cluster</span>
+            <span className="text-[11px] text-[#666666]">Acceptable commute distance</span>
           </div>
         </div>
       </div>
 
       {/* Primary Action Button */}
       {onAnalyzeSkills && (
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-slate-800">
-          <div className="flex items-center gap-2 text-xs text-slate-400">
-            <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-5 border-t border-[#E7E7E3]">
+          <div className="flex items-center gap-2 text-xs text-[#666666]">
+            <Sparkles className="w-4 h-4 text-amber-600 shrink-0" />
             <span>Ready for NSQF Skill Gap Alignment Engine</span>
           </div>
           <button
             onClick={onAnalyzeSkills}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-orange-500 text-slate-950 font-bold text-sm tracking-wide shadow-xl shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-xs tracking-wide shadow-md shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
           >
-            <span>Analyze My Skills (कौशल विश्लेषण करें)</span>
-            <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+            <span>Analyze Skill Gap (कौशल अंतर देखें)</span>
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       )}

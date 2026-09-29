@@ -55,16 +55,6 @@ export const PathwayPage: React.FC<PathwayPageProps> = ({
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 py-6 space-y-12">
-      {/* Progress Step */}
-      <div className="w-full max-w-xl mx-auto">
-        <ProgressIndicator
-          current={6}
-          total={8}
-          label="Livelihood Pathway & Skilling"
-          variant="amber"
-        />
-      </div>
-
       {/* Vertical Interactive Timeline */}
       <PathwayTimeline
         stages={pathway.stages || []}

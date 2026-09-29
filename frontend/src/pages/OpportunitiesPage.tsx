@@ -7,16 +7,11 @@ import {
   Sparkles,
   ArrowRight,
   Filter,
-  CheckCircle2,
-  Clock,
-  Layers,
-  Wrench,
-  DollarSign,
+  Info,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { usePathway } from '../hooks/usePathway';
 import { OpportunityCard } from '../components/OpportunityCard';
-import { StatusBadge } from '../components/StatusBadge';
 import { LoadingState } from '../components/LoadingState';
 import { ErrorState } from '../components/ErrorState';
 import { EmptyState } from '../components/EmptyState';
@@ -38,7 +33,7 @@ export const OpportunitiesPage: React.FC<OpportunitiesPageProps> = ({
     return (
       <div className="w-full max-w-5xl mx-auto px-4 py-12">
         <LoadingState
-          message="Scanning verified local livelihood opportunities..."
+          message="Scanning local livelihood opportunities..."
           subtext="Mapping vacancies across Pune and Pimpri-Chinchwad industrial clusters."
         />
       </div>
@@ -58,109 +53,107 @@ export const OpportunitiesPage: React.FC<OpportunitiesPageProps> = ({
   }
 
   const filteredOpportunities = opportunities.filter(opp => {
-    const isWage = opp.employmentType === 'wage' || opp.employmentType === 'full_time' || opp.employmentType === 'part_time' || opp.employmentType === 'contract';
-    const isSelfEmployed = opp.employmentType === 'self_employed' || opp.employmentType === 'micro_enterprise';
+    const isWage =
+      opp.employmentType === 'wage' ||
+      opp.employmentType === 'full_time' ||
+      opp.employmentType === 'part_time' ||
+      opp.employmentType === 'contract';
+    const isSelfEmployed =
+      opp.employmentType === 'self_employed' || opp.employmentType === 'micro_enterprise';
     const matchType = activeTab === 'wage' ? isWage : isSelfEmployed;
-    const matchDistance = opp.distanceKm <= distanceFilter;
+    const matchDistance = (opp.distanceKm || 18) <= distanceFilter;
     return matchType && matchDistance;
   });
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col items-center">
-      {/* Progress Step */}
-      <div className="w-full max-w-xl mb-6">
-        <ProgressIndicator
-          current={7}
-          total={8}
-          label="Hyperlocal Opportunities"
-          variant="amber"
-        />
-      </div>
-
       {/* Header section */}
-      <div className="text-center max-w-3xl mx-auto mb-8">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-mono text-xs mb-3">
-          <Navigation className="w-3.5 h-3.5" />
-          <span>Hyperlocal Livelihood Matching Engine</span>
+      <div className="text-center max-w-3xl mx-auto mb-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200/80 text-amber-800 text-xs font-semibold mb-3">
+          <Navigation className="w-3.5 h-3.5 text-amber-600" />
+          <span>Hyperlocal Livelihood Matching</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-          Opportunities Around You
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-[#181818] tracking-tight">
+          Opportunities near you
         </h2>
-        <p className="text-xs sm:text-sm text-slate-400 mt-2">
-          आपके घर के 25 किमी के दायरे में उपलब्ध नौकरी एवं स्वरोजगार के अवसर।
+        <p className="text-xs sm:text-sm text-[#666666] mt-2">
+          Based on your skills, pathway and preferred travel distance.
         </p>
       </div>
 
-      {/* Map-Inspired Stylized Radar Bar */}
-      <div className="w-full rounded-2xl bg-gradient-to-r from-slate-900 via-slate-850 to-slate-900 border border-slate-800 p-4 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 flex items-center justify-center">
-            <MapPin className="w-5 h-5" />
-          </div>
-          <div>
-            <div className="text-sm font-bold text-white flex items-center gap-2">
-              <span>Cluster: Pune & Pimpri-Chinchwad</span>
-              <StatusBadge label="ACTIVE CLUSTER" variant="info" size="sm" />
-            </div>
-            <div className="text-xs text-slate-400">
-              Center: Baramati / Hadapsar Sector · 20 km Mobility Tolerance
-            </div>
-          </div>
+      {/* Demo Simulation Notice */}
+      <div className="w-full max-w-4xl p-3.5 rounded-[16px] bg-amber-50/70 border border-amber-200/80 mb-6 flex items-start gap-2.5 text-xs text-amber-900 text-left">
+        <Info className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+        <span>
+          <strong>DEMO DATA:</strong> The listings below represent simulated opportunities mapped to PM-AJAY GIA partner employers in the Pune cluster within your 20 km travel preference.
+        </span>
+      </div>
+
+      {/* Dual Mode Switcher: Wage Employment vs Self Employment */}
+      <div className="w-full max-w-4xl mb-8 flex items-center justify-between gap-4 p-2 rounded-2xl bg-white border border-[#E7E7E3] shadow-subtle flex-wrap">
+        <div className="flex items-center gap-2 px-2 text-xs font-semibold text-[#666666]">
+          <MapPin className="w-4 h-4 text-amber-600" />
+          <span>Pune Cluster · Radius: Up to 20 km</span>
         </div>
 
-        {/* Dual Mode Switcher: Wage Employment vs Self Employment */}
-        <div className="flex items-center p-1 rounded-full bg-slate-950 border border-slate-800 self-stretch sm:self-auto">
+        <div className="flex items-center gap-1 bg-neutral-100 p-1 rounded-full">
           <button
             onClick={() => setActiveTab('wage')}
             className={cn(
-              'flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all',
+              'flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all',
               activeTab === 'wage'
-                ? 'bg-amber-500 text-slate-950 shadow-md'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-white text-[#181818] shadow-sm'
+                : 'text-[#666666] hover:text-[#181818]'
             )}
           >
-            <Briefcase className="w-3.5 h-3.5" />
-            <span>Wage Employment (नौकरी)</span>
+            <Briefcase className="w-3.5 h-3.5 text-amber-600" />
+            <span>Wage Employment</span>
           </button>
 
           <button
             onClick={() => setActiveTab('self_employed')}
             className={cn(
-              'flex-1 sm:flex-none flex items-center justify-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all',
+              'flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all',
               activeTab === 'self_employed'
-                ? 'bg-cyan-500 text-slate-950 shadow-md'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-white text-[#181818] shadow-sm'
+                : 'text-[#666666] hover:text-[#181818]'
             )}
           >
-            <Store className="w-3.5 h-3.5" />
-            <span>Self-Employment (स्वरोजगार)</span>
+            <Store className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Self-Employment</span>
           </button>
         </div>
       </div>
 
       {/* Self-Employment Pathway Details (When Selected) */}
       {activeTab === 'self_employed' && (
-        <div className="w-full mb-8 rounded-3xl glass-card border border-cyan-500/30 p-6 sm:p-8 animate-in fade-in duration-200">
-          <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
+        <div className="w-full max-w-4xl mb-8 rounded-[22px] bg-white border border-[#E7E7E3] p-6 shadow-subtle text-left animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#E7E7E3]">
             <div>
-              <span className="text-[11px] font-mono uppercase tracking-wider text-cyan-300">Enterprise Track</span>
-              <h3 className="text-xl font-bold text-white">Solar Rooftop Installation & Maintenance Micro-Enterprise</h3>
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
+                Enterprise & Micro-Business Track
+              </span>
+              <h3 className="text-xl font-bold text-[#181818]">
+                Solar Rooftop Installation & Maintenance Micro-Enterprise
+              </h3>
             </div>
-            <StatusBadge label="GIA SEED CAPITAL ELIGIBLE" variant="success" size="sm" />
+            <span className="text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
+              GIA Tool Kit & Seed Capital
+            </span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-            <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800">
-              <span className="text-slate-400 uppercase font-mono block mb-1">Required Skills</span>
-              <p className="text-slate-200">Rooftop panel alignment, inverter circuit integration, basic bookkeeping.</p>
+            <div className="p-3.5 rounded-[14px] bg-neutral-50 border border-[#E7E7E3]">
+              <span className="text-[#8A8A8A] font-bold uppercase block mb-1">Required Skills</span>
+              <p className="text-[#181818]">Rooftop panel alignment, inverter circuit integration, basic bookkeeping.</p>
             </div>
-            <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800">
-              <span className="text-slate-400 uppercase font-mono block mb-1">Setup Requirements</span>
-              <p className="text-slate-200">Tool kit (insulated wrenches, multimeter), transport 2-wheeler, GST registration.</p>
+            <div className="p-3.5 rounded-[14px] bg-neutral-50 border border-[#E7E7E3]">
+              <span className="text-[#8A8A8A] font-bold uppercase block mb-1">Kit Provided</span>
+              <p className="text-[#181818]">Insulated tool kit, digital clamp meter, safety harness, transport allowance.</p>
             </div>
-            <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800">
-              <span className="text-slate-400 uppercase font-mono block mb-1">Projected Earnings</span>
-              <p className="text-emerald-400 font-bold font-mono text-sm">₹25,000 - ₹35,000 / month</p>
+            <div className="p-3.5 rounded-[14px] bg-neutral-50 border border-[#E7E7E3]">
+              <span className="text-[#8A8A8A] font-bold uppercase block mb-1">Projected Earnings</span>
+              <p className="text-emerald-700 font-bold font-mono text-sm">₹25,000 – ₹35,000 / month</p>
             </div>
           </div>
         </div>
@@ -177,21 +170,18 @@ export const OpportunitiesPage: React.FC<OpportunitiesPageProps> = ({
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mb-12">
           {filteredOpportunities.map(opp => (
-            <OpportunityCard
-              key={opp.id}
-              opportunity={opp}
-            />
+            <OpportunityCard key={opp.id} opportunity={opp} />
           ))}
         </div>
       )}
 
-      {/* Bottom CTA to proceed to post-placement follow-up */}
+      {/* Bottom CTA to proceed to follow-up */}
       <div className="w-full flex justify-end">
         <button
           onClick={onProceedToFollowUp}
-          className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-orange-500 text-slate-950 font-bold text-sm tracking-wide shadow-xl shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all"
+          className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-xs tracking-wide shadow-md shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
         >
-          <span>Proceed to Post-Placement Follow-up (प्रगति सत्यापन)</span>
+          <span>Proceed to Outcome Follow-Up (प्रगति सत्यापन)</span>
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>

@@ -3,7 +3,7 @@ import { Check, Sparkles, Volume2 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { Language } from '../types';
 
-interface LanguageOption {
+export interface LanguageOption {
   code: Language;
   nativeName: string;
   englishName: string;
@@ -11,7 +11,7 @@ interface LanguageOption {
   audioPreview: string;
 }
 
-const LANGUAGES: LanguageOption[] = [
+export const LANGUAGES: LanguageOption[] = [
   {
     code: 'hi',
     nativeName: 'हिंदी',
@@ -52,16 +52,16 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
 }) => {
   if (isCompact) {
     return (
-      <div className={cn('flex items-center gap-1 p-1 rounded-full glass-card border border-slate-700/60', className)}>
+      <div className={cn('flex items-center gap-1 p-1 rounded-full bg-[#FFFFFF] border border-[#E7E7E3] shadow-sm', className)}>
         {LANGUAGES.map(lang => (
           <button
             key={lang.code}
             onClick={() => onSelectLanguage(lang.code)}
             className={cn(
-              'px-3 py-1 rounded-full text-xs font-semibold transition-all duration-200',
+              'px-2.5 py-1 rounded-full text-xs font-semibold transition-all duration-200',
               currentLanguage === lang.code
-                ? 'bg-amber-500 text-slate-950 shadow-md font-bold'
-                : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                ? 'bg-amber-500 text-white shadow-sm font-bold'
+                : 'text-[#666666] hover:text-[#181818] hover:bg-neutral-100'
             )}
           >
             {lang.nativeName}
@@ -74,14 +74,14 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   return (
     <div className={cn('w-full max-w-xl mx-auto text-center', className)}>
       <div className="mb-6">
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold uppercase tracking-wider mb-3">
-          <Sparkles className="w-3.5 h-3.5" />
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200/80 text-amber-700 text-xs font-semibold uppercase tracking-wider mb-3">
+          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
           <span>Multilingual Voice AI</span>
         </span>
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#181818] tracking-tight">
           आप किस भाषा में बातचीत करना चाहेंगे?
         </h2>
-        <p className="text-slate-400 text-sm mt-2 max-w-md mx-auto">
+        <p className="text-[#666666] text-sm mt-2 max-w-md mx-auto">
           Choose the language you are most comfortable speaking. Tap to select.
         </p>
       </div>
@@ -94,22 +94,22 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
               key={lang.code}
               onClick={() => onSelectLanguage(lang.code)}
               className={cn(
-                'group relative flex flex-col items-center justify-between p-5 rounded-2xl border text-left transition-all duration-200 active:scale-95',
+                'group relative flex flex-col items-center justify-between p-5 rounded-[20px] border text-left transition-all duration-200 active:scale-98',
                 isSelected
-                  ? 'bg-gradient-to-b from-amber-500/20 to-orange-500/10 border-amber-400 shadow-xl shadow-amber-500/10'
-                  : 'glass-card border-slate-700/70 hover:border-slate-500 hover:bg-slate-800/60'
+                  ? 'bg-amber-50/70 border-amber-400 shadow-md shadow-amber-500/10'
+                  : 'bg-white border-[#E7E7E3] hover:border-neutral-300 hover:shadow-card'
               )}
             >
               <div className="w-full flex items-center justify-between mb-4">
-                <span className={cn('text-xs font-mono font-medium', isSelected ? 'text-amber-300' : 'text-slate-400')}>
+                <span className={cn('text-xs font-mono font-medium', isSelected ? 'text-amber-800' : 'text-[#8A8A8A]')}>
                   {lang.englishName}
                 </span>
                 <div
                   className={cn(
                     'w-5 h-5 rounded-full flex items-center justify-center border transition-all',
                     isSelected
-                      ? 'bg-amber-400 border-amber-400 text-slate-950 font-bold'
-                      : 'border-slate-600 bg-slate-800/80 group-hover:border-slate-400'
+                      ? 'bg-amber-500 border-amber-500 text-white font-bold'
+                      : 'border-neutral-300 bg-neutral-50 group-hover:border-neutral-400'
                   )}
                 >
                   {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
@@ -117,16 +117,16 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
               </div>
 
               <div className="w-full my-auto text-center">
-                <div className="text-2xl font-bold text-white group-hover:text-amber-300 transition-colors">
+                <div className="text-2xl font-bold text-[#181818] group-hover:text-amber-600 transition-colors">
                   {lang.nativeName}
                 </div>
-                <p className="text-xs text-slate-400 mt-1 line-clamp-2">
+                <p className="text-xs text-[#666666] mt-1.5 line-clamp-2">
                   {lang.tagline}
                 </p>
               </div>
 
-              <div className="w-full mt-4 pt-3 border-t border-white/5 flex items-center justify-center gap-1.5 text-[11px] text-amber-400/90 font-medium">
-                <Volume2 className="w-3 h-3" />
+              <div className="w-full mt-4 pt-3 border-t border-[#E7E7E3] flex items-center justify-center gap-1.5 text-[11px] text-amber-700 font-medium">
+                <Volume2 className="w-3 h-3 text-amber-600" />
                 <span>{lang.audioPreview}</span>
               </div>
             </button>
@@ -137,7 +137,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       {onProceed && (
         <button
           onClick={onProceed}
-          className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-orange-500 text-slate-950 font-bold text-sm tracking-wide shadow-xl shadow-amber-500/20 hover:scale-105 active:scale-95 transition-all"
+          className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold text-sm tracking-wide shadow-md shadow-amber-500/20 hover:shadow-lg hover:shadow-amber-500/30 active:scale-95 transition-all"
         >
           <span>जारी रखें (Continue)</span>
         </button>

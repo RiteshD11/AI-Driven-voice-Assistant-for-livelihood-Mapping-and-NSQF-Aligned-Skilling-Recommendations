@@ -36,7 +36,15 @@ export async function baseRequest<T>(endpoint: string, options: RequestOptions =
   const defaultHeaders: Record<string, string> = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
+    'x-demo-user': 'true',
   };
+
+  try {
+    const token = typeof localStorage !== 'undefined' ? localStorage.getItem('token') : null;
+    if (token) {
+      defaultHeaders['Authorization'] = `Bearer ${token}`;
+    }
+  } catch {}
 
   try {
     const response = await fetch(url, {
