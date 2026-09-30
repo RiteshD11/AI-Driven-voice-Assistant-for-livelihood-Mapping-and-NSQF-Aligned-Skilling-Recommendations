@@ -7,7 +7,7 @@ import { ConsentModal } from '../components/ConsentModal';
 export const AuthPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [name, setName] = useState('');
-  const [identifier, setIdentifier] = useState('demo@aarohan.gov.in');
+  const [identifier, setIdentifier] = useState('demo@unnati.gov.in');
   const [password, setPassword] = useState('demo1234');
   const [phone, setPhone] = useState('');
   const [language, setLanguage] = useState('hi');
@@ -46,7 +46,7 @@ export const AuthPage: React.FC = () => {
   };
 
   const fillDemoCredentials = () => {
-    setIdentifier('demo@aarohan.gov.in');
+    setIdentifier('demo@unnati.gov.in');
     setPassword('demo1234');
     setError('');
   };
@@ -57,7 +57,7 @@ export const AuthPage: React.FC = () => {
         {/* Portal header branding */}
         <div className="text-center space-y-2">
           <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-blue-900 text-amber-400 font-black text-2xl shadow-md">
-            आ
+            उ
           </div>
           <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
             {isLogin ? 'लाभार्थी लॉगिन (Beneficiary Login)' : 'नया पंजीकरण (New Registration)'}
@@ -80,7 +80,7 @@ export const AuthPage: React.FC = () => {
             </button>
           </div>
           <div className="text-slate-600 font-mono text-[11px]">
-            उपयोगकर्ता: <span className="text-slate-900 font-bold">demo@aarohan.gov.in</span> | पासवर्ड: <span className="text-slate-900 font-bold">demo1234</span>
+            उपयोगकर्ता: <span className="text-slate-900 font-bold">demo@unnati.gov.in</span> | पासवर्ड: <span className="text-slate-900 font-bold">demo1234</span>
           </div>
         </div>
 
@@ -124,7 +124,7 @@ export const AuthPage: React.FC = () => {
                   required
                   value={identifier}
                   onChange={(e) => setIdentifier(e.target.value)}
-                  placeholder="demo@aarohan.gov.in या 9876543210"
+                  placeholder="demo@unnati.gov.in या 9876543210"
                   className="w-full pl-9 pr-3 py-2 text-xs border border-slate-300 rounded-lg focus:outline-none focus:border-blue-900"
                 />
               </div>

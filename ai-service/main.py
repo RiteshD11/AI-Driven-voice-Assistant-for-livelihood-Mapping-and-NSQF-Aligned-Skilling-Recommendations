@@ -16,7 +16,7 @@ from services.livelihood_mapper import map_livelihood
 load_dotenv()
 
 app = FastAPI(
-    title="AAROHAN AI & NLP Service",
+    title="UNNATI AI & NLP Service",
     description="Multilingual NLP, Skill Gap Analysis & Recommendation Engine for SIH 2026",
     version="1.0.0"
 )
@@ -33,7 +33,7 @@ app.add_middleware(
 def health_check():
     return {
         "status": "healthy",
-        "service": "AAROHAN AI/NLP Service",
+        "service": "UNNATI AI/NLP Service",
         "version": "1.0.0",
         "demo_mode": os.getenv("DEMO_MODE", "true") == "true"
     }
@@ -82,6 +82,6 @@ def api_livelihood_map(interest: str = "it"):
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("AI_SERVICE_PORT", 8000))
-    print(f"🚀 Starting AAROHAN AI Service on port {port}")
+    print(f"🚀 Starting UNNATI AI Service on port {port}")
     uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
 

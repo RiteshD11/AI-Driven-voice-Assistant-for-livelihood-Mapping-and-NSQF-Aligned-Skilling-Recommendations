@@ -12,7 +12,7 @@ export const AboutPage: React.FC = () => {
             <span>स्मार्ट इंडिया हैकाथॉन (SIH 2026) प्रोटोटाइप</span>
           </div>
           <h1 className="text-3xl font-extrabold text-slate-900">
-            AAROHAN (आरोहण) के बारे में
+            UNNATI (उन्नति) के बारे में
           </h1>
           <p className="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto">
             एआई-संचालित बहुभाषी वॉयस सहायक: आजीविका मानचित्रण एवं एनएसक्यूएफ संरेखित कौशल विकास
@@ -37,7 +37,7 @@ export const AboutPage: React.FC = () => {
           <p className="text-xs text-slate-700 leading-relaxed">
             ग्रामीण एवं अर्ध-शहरी क्षेत्रों में कई लाभार्थी उपयुक्त कौशल प्रशिक्षण की जानकारी के अभाव, 
             कौशल बेमेल, भाषा बाधा और कम डिजिटल साक्षरता के कारण विकास की मुख्यधारा से वंचित रह जाते हैं। 
-            आरोहण इस खाई को पाटने के लिए एक स्वाभाविक, आवाज-आधारित (Voice-First) मार्गदर्शन प्रणाली प्रदान करता है।
+            उन्नति इस खाई को पाटने के लिए एक स्वाभाविक, आवाज-आधारित (Voice-First) मार्गदर्शन प्रणाली प्रदान करता है।
           </p>
         </div>
 
@@ -48,7 +48,7 @@ export const AboutPage: React.FC = () => {
             <h3 className="font-bold text-base">सरकारी इकोसिस्टम संरेखण (Government Ecosystem Alignment)</h3>
           </div>
           <p className="text-xs text-slate-300 leading-relaxed">
-            "आरोहण को संबंधित सरकारी कौशल और आजीविका तंत्रों के साथ संरेखित करने हेतु डिज़ाइन किया गया है:"
+            "उन्नति को संबंधित सरकारी कौशल और आजीविका तंत्रों के साथ संरेखित करने हेतु डिज़ाइन किया गया है:"
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">

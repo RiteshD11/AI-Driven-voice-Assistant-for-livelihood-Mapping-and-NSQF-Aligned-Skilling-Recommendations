@@ -1,7 +1,7 @@
 {
-  "name": "aarohan-backend",
+  "name": "unnati-backend",
   "version": "1.0.0",
-  "description": "AAROHAN Backend API - Node.js + Express + MongoDB",
+  "description": "UNNATI Backend API - Node.js + Express + MongoDB",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

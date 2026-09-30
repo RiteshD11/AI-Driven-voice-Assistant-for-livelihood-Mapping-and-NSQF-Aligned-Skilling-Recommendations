@@ -15,7 +15,7 @@ exports.submitFeedback = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: 'Feedback received with thanks! This helps improve AAROHAN for all beneficiaries.',
+      message: 'Feedback received with thanks! This helps improve UNNATI for all beneficiaries.',
       feedbackId: feedback._id
     });
   } catch (error) {

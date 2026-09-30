@@ -17,7 +17,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>({
     id: 'demo-beneficiary-101',
     name: 'राजेश कुमार (Rajesh Kumar)',
-    email: 'rajesh.kumar@aarohan.demo',
+    email: 'rajesh.kumar@unnati.demo',
     phone: '9876543210',
     role: 'beneficiary',
     language: 'hi',

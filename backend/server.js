@@ -47,7 +47,7 @@ if (process.env.NODE_ENV !== 'test') {
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', service: 'aarohan-backend', timestamp: new Date().toISOString() });
+  res.json({ status: 'ok', service: 'unnati-backend', timestamp: new Date().toISOString() });
 });
 
 // Routes
@@ -142,7 +142,7 @@ app.use((err, req, res, next) => {
 const HOST = process.env.HOST || '0.0.0.0';
 
 app.listen(PORT, HOST, () => {
-  console.log(`✅ AAROHAN Backend running on http://${HOST === '0.0.0.0' ? 'localhost' : HOST}:${PORT}`);
+  console.log(`✅ UNNATI Backend running on http://${HOST === '0.0.0.0' ? 'localhost' : HOST}:${PORT}`);
   console.log(`📡 API: http://localhost:${PORT}/api`);
   console.log(`🔧 Demo Mode: ${process.env.DEMO_MODE === 'true' ? 'ON' : 'OFF'}`);
 });

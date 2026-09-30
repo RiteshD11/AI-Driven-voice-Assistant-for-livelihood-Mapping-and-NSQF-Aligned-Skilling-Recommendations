@@ -10,7 +10,7 @@ interface LanguageContextType {
 
 const translations: Record<string, Record<Language, string>> = {
   // App brand & hero
-  'app.name': { hi: 'आरोहण (AAROHAN)', en: 'AAROHAN' },
+  'app.name': { hi: 'उन्नति (UNNATI)', en: 'UNNATI' },
   'app.tagline': { 
     hi: 'आपकी आवाज़। आपका हुनर। आपकी आजीविका।', 
     en: 'Your Voice. Your Skills. Your Livelihood.' 
@@ -33,10 +33,10 @@ const translations: Record<string, Record<Language, string>> = {
   'nav.jobs': { hi: 'रोजगार व स्वरोजगार', en: 'Jobs & Self-Employment' },
   'nav.dashboard': { hi: 'प्रगति डैशबोर्ड', en: 'Progress Dashboard' },
   'nav.admin': { hi: 'प्रशासन डैशबोर्ड', en: 'Admin Dashboard' },
-  'nav.about': { hi: 'आरोहण के बारे में', en: 'About AAROHAN' },
+  'nav.about': { hi: 'उन्नति के बारे में', en: 'About UNNATI' },
   'nav.help': { hi: 'सहायता व सुगमता', en: 'Accessibility & Help' },
   // Voice Assistant
-  'voice.greeting': { hi: 'नमस्ते! मैं आरोहण हूँ।', en: "Namaste! I'm AAROHAN." },
+  'voice.greeting': { hi: 'नमस्ते! मैं उन्नति हूँ।', en: "Namaste! I'm UNNATI." },
   'voice.subtitle': { hi: 'आइए आपकी शिक्षा, कौशल और रुचियों को समझें।', en: "Let's understand your skills and interests." },
   'voice.startSpeaking': { hi: 'बोलना शुरू करें', en: 'Start Speaking' },
   'voice.stopSpeaking': { hi: 'रोकें', en: 'Stop' },

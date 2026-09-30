@@ -142,7 +142,7 @@ export const HelpPage: React.FC = () => {
                   rows={3}
                   value={feedbackText}
                   onChange={(e) => setFeedbackText(e.target.value)}
-                  placeholder="आरोहण को और बेहतर बनाने हेतु अपना सुझाव साझा करें..."
+                  placeholder="उन्नति को और बेहतर बनाने हेतु अपना सुझाव साझा करें..."
                   className="w-full p-2.5 border border-slate-300 rounded-lg focus:outline-none focus:border-blue-900"
                 />
               </div>

@@ -62,7 +62,7 @@ export const Footer: React.FC = () => {
             © 2026 UNNATI · Smart India Hackathon Submission · Ministry of Social Justice & Empowerment
           </div>
           <div className="flex items-center gap-3">
-            <span>Problem Statement SIH26097 · Team AAROHAN</span>
+            <span>Problem Statement SIH26097 · Team UNNATI</span>
           </div>
         </div>
       </div>
