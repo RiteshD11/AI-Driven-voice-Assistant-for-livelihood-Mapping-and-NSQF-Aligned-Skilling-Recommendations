@@ -14,6 +14,7 @@ import { SkillGapPage } from './pages/SkillGapPage';
 import { RecommendationsPage } from './pages/RecommendationsPage';
 import { PathwayPage } from './pages/PathwayPage';
 import { OpportunitiesPage } from './pages/OpportunitiesPage';
+import { EcosystemPage } from './pages/EcosystemPage';
 import { FollowUpPage } from './pages/FollowUpPage';
 import { ProgressDashboardPage } from './pages/ProgressDashboardPage';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
@@ -34,6 +35,7 @@ const MainAppContent: React.FC = () => {
     if (path === 'skill-gap') return 'skill-gap';
     if (path === 'recommendations') return 'recommendations';
     if (path === 'pathway') return 'pathway';
+    if (path === 'ecosystem') return 'ecosystem';
     if (path === 'training') return 'training';
     if (path === 'opportunities') return 'opportunities';
     if (path === 'follow-up') return 'follow-up';
@@ -185,6 +187,14 @@ const MainAppContent: React.FC = () => {
               <PathwayPage
                 onStartTraining={() => navigateTo('opportunities')}
                 onExploreOpportunities={() => navigateTo('opportunities')}
+                onExploreEcosystem={() => navigateTo('ecosystem')}
+              />
+            )}
+
+            {activeView === 'ecosystem' && (
+              <EcosystemPage
+                onNavigateToPathway={() => navigateTo('pathway')}
+                onNavigateToOpportunities={() => navigateTo('opportunities')}
               />
             )}
 
@@ -192,6 +202,7 @@ const MainAppContent: React.FC = () => {
               <PathwayPage
                 onStartTraining={() => navigateTo('opportunities')}
                 onExploreOpportunities={() => navigateTo('opportunities')}
+                onExploreEcosystem={() => navigateTo('ecosystem')}
               />
             )}
 

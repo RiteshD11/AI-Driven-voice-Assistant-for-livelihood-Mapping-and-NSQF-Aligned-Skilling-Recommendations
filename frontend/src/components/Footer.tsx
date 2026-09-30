@@ -30,8 +30,9 @@ export const Footer: React.FC = () => {
               <li>03. Skill Gap Assessment</li>
               <li>04. NSQF Skilling Recommendations</li>
               <li>05. Livelihood Pathway</li>
-              <li>06. Local Livelihood Opportunities</li>
-              <li>07. Outcome & 90-Day Follow-Up</li>
+              <li>06. Official Ecosystem Connect</li>
+              <li>07. Local Livelihood Opportunities</li>
+              <li>08. Outcome & 90-Day Follow-Up</li>
             </ul>
           </div>
 
